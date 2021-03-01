@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QLCUNL.WebUI", "QLCUNL.WebUI\QLCUNL.WebUI.csproj", "{6C4AEEEF-066B-4D05-B262-5D5FF977BCFF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QLCUNL.Models", "QLCUNL.Models\QLCUNL.Models.csproj", "{85AA6775-6048-4C7F-8806-8BA4278D6109}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESUtil", "ESUtil\ESUtil.csproj", "{D5F7A31F-96ED-422A-8F5F-6B9EFE427B9B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUtil", "XUtil\XUtil.csproj", "{77A2CD27-7BA4-43CF-A381-775B8E48DC94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QLCUNL.BL", "QLCUNL.BL\QLCUNL.BL.csproj", "{E714C9C9-82F2-4C4E-9A9E-0853DEB4543E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QLCUNL.API", "QLCUNL.API\QLCUNL.API.csproj", "{3BF6502B-CF03-4AC5-8D91-0FAE09762811}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLCUNL.SendMail", "QLCUNL.SendMail\QLCUNL.SendMail.csproj", "{7CDEA58C-D710-4234-821A-AB654E780ED4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C4AEEEF-066B-4D05-B262-5D5FF977BCFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4AEEEF-066B-4D05-B262-5D5FF977BCFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C4AEEEF-066B-4D05-B262-5D5FF977BCFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4AEEEF-066B-4D05-B262-5D5FF977BCFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85AA6775-6048-4C7F-8806-8BA4278D6109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85AA6775-6048-4C7F-8806-8BA4278D6109}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85AA6775-6048-4C7F-8806-8BA4278D6109}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85AA6775-6048-4C7F-8806-8BA4278D6109}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F7A31F-96ED-422A-8F5F-6B9EFE427B9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F7A31F-96ED-422A-8F5F-6B9EFE427B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F7A31F-96ED-422A-8F5F-6B9EFE427B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F7A31F-96ED-422A-8F5F-6B9EFE427B9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77A2CD27-7BA4-43CF-A381-775B8E48DC94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77A2CD27-7BA4-43CF-A381-775B8E48DC94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77A2CD27-7BA4-43CF-A381-775B8E48DC94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77A2CD27-7BA4-43CF-A381-775B8E48DC94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E714C9C9-82F2-4C4E-9A9E-0853DEB4543E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E714C9C9-82F2-4C4E-9A9E-0853DEB4543E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E714C9C9-82F2-4C4E-9A9E-0853DEB4543E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E714C9C9-82F2-4C4E-9A9E-0853DEB4543E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BF6502B-CF03-4AC5-8D91-0FAE09762811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BF6502B-CF03-4AC5-8D91-0FAE09762811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BF6502B-CF03-4AC5-8D91-0FAE09762811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BF6502B-CF03-4AC5-8D91-0FAE09762811}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CDEA58C-D710-4234-821A-AB654E780ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CDEA58C-D710-4234-821A-AB654E780ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CDEA58C-D710-4234-821A-AB654E780ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CDEA58C-D710-4234-821A-AB654E780ED4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {728F085E-3501-4F2A-91A9-7BB71E5757DF}
+	EndGlobalSection
+EndGlobal

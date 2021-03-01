@@ -1,0 +1,60 @@
+﻿<div class="form-group d-none">
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Đến ngày</label><input class="form-control" id="ngay_het" value="@DateTime.Now.AddYears(10).ToString("dd-MM-yyyy")" placeholder="dd-MM-HH" />
+        </div>
+        <div class="col-sm-8">
+            <label class="control-label">Quyền</label>
+            @foreach (var item in Enum.GetValues(typeof(QLCUNL.Models.Quyen)))
+            {
+                <input name="quyen" type="checkbox" value="@item" @((QLCUNL.Models.Quyen)item == QLCUNL.Models.Quyen.VIEW ? " checked disabled" : "") /> @item
+            }
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label"><input type="checkbox" id="chk_all_user" />&nbsp;<strong>Chia sẻ theo tài khoản</strong></label>
+    @Html.Raw(ViewBag.all_user)
+</div>
+<div class="form-group">
+    <label class="control-label"><input type="checkbox" id="chk_all_team" />&nbsp;<strong>Chia sẻ theo nhóm</strong></label>
+
+    @if (ViewBag.list_team != null)
+    {
+        <ul class="check-box row">
+            @foreach (var item in ViewBag.list_team)
+            {
+                <li class="col-md-4"><input type="checkbox" name="team_shared" value="@item.id_team"> @item.team_name</li>
+            }
+        </ul>
+    }
+</div>
+<div class="form-group">
+    <input value="Chia sẻ" type="button" class="btn-size btn btn-primary" onclick="onShare('@ViewBag.id',@ViewBag.obj_type,1,1)" />
+</div>
+<script>
+    $(function () {
+
+        $("#chk_all_user").click(function () {
+            $("[name='user_shared']").prop('checked', $("#chk_all_user").is(":checked"));
+        });
+        $("#chk_all_team").click(function () {
+            $("[name='team_shared']").prop('checked', $("#chk_all_team").is(":checked"));
+        });
+        callAPI(`${API_URL}/@(((QLCUNL.Models.PhanQuyenObjType)ViewBag.obj_type).ToString().ToLower().Replace("_",""))/shared?id=${id}`, null, "GET", function (res) {
+            if (res.success) {
+                var data = res.data;
+                data.forEach(item => {
+                    let val = item.user;
+                    if (item.type === 2) {
+                        $(`input[name='team_shared'][value='${val}']`).prop('checked', true);
+                    } else {
+                        if (item.type === 1) {
+                            $(`input[name='user_shared'][value='${val}']`).prop('checked', true);
+                        }
+                    }
+                });
+            }
+        });
+    })
+</script>

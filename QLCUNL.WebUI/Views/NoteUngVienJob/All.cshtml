@@ -1,0 +1,172 @@
+﻿@model IEnumerable<QLCUNL.Models.NoteUngVienJob>
+
+@{
+    ViewData["Title"] = "Danh sách Note ứng viên JOB";
+}
+<div class="row">
+    <div class="col-md-6">
+        <h3>Ghi chú ứng viên theo JOB</h3>
+    </div>
+    @*<div class="col-md-6 text-right"><a asp-action="Add" class="btn-size btn btn-primary" style="color: #fff">Tạo mới</a></div>*@
+</div>
+
+<label for="">Tìm kiếm theo: </label>
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="form-group search-default">
+            <input placeholder="Tìm kiếm" id="term" name="term" class="form-control" />
+            <button id="btn_search" class="btn-size btn btn-primary">Tìm</button>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <select id="type-search" class="form-control" onchange="searchBy()">
+            <option value="default" selected>Mặc định</option>
+            @*<option value="byid">Tìm theo ID</option>*@
+            <option value="bydayinterview">Ngày phỏng vấn</option>
+            <option value="bydaywork">Ngày đi làm</option>
+            <option value="bysalarytest">Lương thử việc </option>
+            <option value="bysalarymain">Lương chính thức </option>
+        </select>
+    </div>
+    <div class="box col-md-4">
+        <div class="form-group search-by-id d-none">
+            <input placeholder="ID User" id="id_user" class="form-control" />
+            <input placeholder="ID Job" id="id_job" class="form-control" value="@ViewBag.id_job" />
+            <input placeholder="ID Ứng Viên" id="id_ung_vien" class="form-control" value="@ViewBag.id_ung_vien" />
+        </div>
+        <div class="form-group search-by-datetime d-none">
+            <input placeholder="Ngày giờ phỏng vấn (từ)" id="ngay_gio_phong_van_from" class="form-control" />
+            <input placeholder="Ngày giờ phỏng vấn (đến)" id="ngay_gio_phong_van_to" class="form-control" />
+        </div>
+        <div class="form-group search-by-daywork d-none">
+            <input placeholder="Ngày đi làm (từ)" id="ngay_di_lam_from" class="form-control" />
+            <input placeholder="Ngày đi làm (đến)" id="ngay_di_lam_to" class="form-control" />
+        </div>
+        <div class="form-group search-by-salary d-none">
+            <input placeholder="Lương thử việc (từ)" id="luong_thu_viec_from" class="form-control" />
+            <input placeholder="Lương thử việc (đến)" id="luong_thu_viec_to" class="form-control" />
+        </div>
+        <div class="form-group search-by-salarymain d-none">
+            <input placeholder="Lương chính thức (từ)" id="luong_chinh_thuc_from" class="form-control" />
+            <input placeholder="Lương chính thức (đến)" id="luong_chinh_thuc_to" class="form-control" />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="div_thuoc_tinh" class="collapse">@Html.Raw(ViewBag.thuoc_tinh_checkbox)</div>
+    </div>
+</div>
+<div class="row">
+    <span class="col-md-12 totalRecs text-right">Tổng số bản ghi:</span>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th>
+                        Ứng viên
+                    </th>
+                   
+                    <th>Trạng thái</th>
+                    <th>
+                        Giờ phỏng vấn
+                    </th>
+                    <th>
+                        Đi làm
+                    </th>
+                    <th>
+                        Lương thử/chính
+                    </th>
+                    <th>
+                        Ghi chú
+                    </th>
+
+                    <th style="width: 165px"></th>
+                </tr>
+            </thead>
+            <tbody id="div_data" class="table-hover">
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+        <div class="d-flex text-center data-container">
+            <div class="paging">
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Đánh dấu thuộc tính</h4>
+                </div>
+                <h4 class="text-left">&nbsp;&nbsp;&nbsp;<u>Thuộc tính ứng viên theo JOB</u></h4>
+                <div class="modal-body" id="thuoc_tinh_du_lieu">
+                </div>
+                <hr />
+                <h4 class="text-left">&nbsp;&nbsp;&nbsp;<u>Thuộc tính riêng ứng viên</u></h4>
+                <div class="modal-body" id="thuoc_tinh_ung_vien">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn-size btn btn-info" data-submit="submit" onclick="onCreateThuocTinh('@QLCUNL.Models.LoaiThuocTinh.NOTE_UNG_VIEN_JOB')">Lưu lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* show status and update*@
+    <div class="modal fade" id="myStatus" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cập nhật trạng thái</h4>
+                </div>
+                <div class="modal-body row" id="status">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn-size btn btn-info" data-submit="submit" onclick="onSaveTrangThai()">Lưu lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addDate" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body" id="date-time-view">
+                    <label>Thêm giờ phỏng vấn</label>
+                    <input placeholder="09:30 31-12-2020" class="form-control" name="gio_phong_van" id="gio_phong_van" value="" />
+                    <input class="d-none" id="id_note_uv_job_pv" value="" type="hidden">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn-size btn btn-info" data-submit="submit" onclick="onSaveGioPhongVan()">Lưu lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*add datetime interview*@
+</div>
+<script asp-append-version="true" type="text/javascript" src="~/js/note_ung_vien_job_all.js"></script>
+<script>
+    $(function () {
+        let id_job = "@ViewBag.id_job";
+        let id_ung_vien = "@ViewBag.id_ung_vien";
+        $(`[name='term']`).keypress(function (event) {
+            if (event.keyCode == 13) {
+                search(1);
+            }
+        });
+        $("#btn_search").click(function () {
+            search(1);
+        });
+        search(1);
+    })
+</script>

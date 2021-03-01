@@ -1,0 +1,9 @@
+F:\COde\XUtil\bin\Debug\netstandard2.0\XUtil.deps.json
+F:\COde\XUtil\bin\Debug\netstandard2.0\XUtil.dll
+F:\COde\XUtil\bin\Debug\netstandard2.0\XUtil.pdb
+F:\COde\XUtil\obj\Debug\netstandard2.0\XUtil.csprojAssemblyReference.cache
+F:\COde\XUtil\obj\Debug\netstandard2.0\XUtil.AssemblyInfoInputs.cache
+F:\COde\XUtil\obj\Debug\netstandard2.0\XUtil.AssemblyInfo.cs
+F:\COde\XUtil\obj\Debug\netstandard2.0\XUtil.csproj.CoreCompileInputs.cache
+F:\COde\XUtil\obj\Debug\netstandard2.0\XUtil.dll
+F:\COde\XUtil\obj\Debug\netstandard2.0\XUtil.pdb

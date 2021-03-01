@@ -1,0 +1,56 @@
+﻿@model IEnumerable<QLCUNL.Models.NhaTuyenDung>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Danh sách nhà tuyển dụng";
+}
+    
+    <div class="row">
+        <div class="col-md-12"><br>
+            <h3 class="text-center">Danh sách ứng viên nhà tuyển dụng đã NOTE</h3>
+            <div class="row">          
+                <table class="table table-striped data-table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Tên ứng viên</th>
+                            <th>Nội dung NOTE</th>                            
+                            <th>Ngày tạo</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-hover" id="note_ung_vien">
+                    </tbody>
+                </table>                
+            </div>            
+        </div>
+        <div class="col-md-12"><br>
+            <h3 class="text-center">Danh sách ứng viên nhà tuyển dụng đã xem CV</h3>
+            
+            <table class="table table-striped data-table">
+                <thead class="thead-light">
+                    <tr>
+                        
+                        <th class="text-center">Nội dung</th>                        
+                    </tr>
+                </thead>
+                <tbody class="table-hover" id="log_cv_ung_vien">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12"><br>
+            <h3 class="text-center">Lịch sử truy cập của nhà tuyển dụng</h3>
+            <table class="table table-striped data-table">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center">Thời gian</th>
+                    </tr>
+                </thead>
+                <tbody class="table-hover" id="log_nha_tuyen_dung">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script asp-append-version="true" type="text/javascript" src="~/js/nha_tuyen_dung.js"></script>    
+    <script>
+        let id = '@ViewBag.id';
+        viewLog();
+    </script>

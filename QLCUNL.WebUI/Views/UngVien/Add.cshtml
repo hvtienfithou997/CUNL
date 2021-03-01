@@ -1,0 +1,143 @@
+﻿@using QLCUNL.Models
+@model QLCUNL.Models.UngVien
+
+@{
+    ViewData["Title"] = "Thêm ứng viên";
+}
+
+<h3>Thêm mới ứng viên</h3>
+<div class="row" >
+    
+    <div class="w-100 col-md-4"></div>
+    <div class="w-100 col-md-4">
+        <div class="show-auto-id"></div>
+    </div>
+    <div class="w-100 col-md-4"></div>
+</div>
+<hr />
+<form id="validate-ung-vien">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label asp-for="ho_ten_ung_vien" class="control-label"></label>
+                <input asp-for="ho_ten_ung_vien" class="form-control" id="ho_ten_ung_vien" name="ho_ten_ung_vien" />
+                <span asp-validation-for="ho_ten_ung_vien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="so_dien_thoai" class="control-label"></label>
+                <input asp-for="so_dien_thoai" class="form-control" id="so_dien_thoai" name="so_dien_thoai" />
+                <span asp-validation-for="so_dien_thoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" class="form-control" id="email" name="email" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dia_chi" class="control-label"></label>
+                <input asp-for="dia_chi" class="form-control" id="dia_chi" name="dia_chi" />
+                <span asp-validation-for="dia_chi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="vi_tri_ung_tuyen" class="control-label"></label>
+                <input asp-for="vi_tri_ung_tuyen" class="form-control" id="vi_tri_ung_tuyen" name="vi_tri_ung_tuyen" />
+                <span asp-validation-for="vi_tri_ung_tuyen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="noi_dung" class="control-label">Tóm tắt ứng viên</label>
+
+                <textarea asp-for="noi_dung" rows="8" class="form-control" id="noi_dung"></textarea>
+                <span asp-validation-for="noi_dung" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ghi_chu_cuoi" class="control-label">Ghi chú</label>
+                <textarea asp-for="ghi_chu_cuoi" rows="4" class="form-control" id="ghi_chu_cuoi"></textarea>
+                <span asp-validation-for="ghi_chu_cuoi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button class="btn-size btn btn-primary" onclick="onSubmit(event)"><i class="icon icon-add"></i>Thêm</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="luong_mong_muon" class="control-label"></label>
+                <input asp-for="luong_mong_muon" class="form-control" id="luong_mong_muon" name="luong_mong_muon" onkeyup="splitInDots(this)" />
+                <span asp-validation-for="luong_mong_muon" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="zalo" class="control-label"></label>
+                <input asp-for="zalo" class="form-control" id="zalo" />
+                <span asp-validation-for="zalo" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="link_cv" class="control-label"></label>
+                <input asp-for="link_cv" class="form-control" id="link_cv" />
+                <span asp-validation-for="link_cv" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                    <ul class="tabs">
+                        <li class="tab-link current" data-tab="tab-1">Link CV</li>
+                        <li class="tab-link" data-tab="tab-2">Upload File</li>
+                    </ul>
+                    <div id="tab-1" class="tab-content-add current">
+                        <label asp-for="link_cv" class="control-label">Link CV</label>
+                        <input  class="form-control" id="link_cv" placeholder="vd.https://google.com.vn" />
+                    </div>
+                    <div id="tab-2" class="tab-content-add">
+                        <input type="file" id="file_upload" value="" />
+                        <button type='button' class='btn btn-info' id='btn_upload'>Upload</button>
+                        <input type="text" id="link_cv_upload" onclick="copyValue()" class="form-control" />
+                    </div>
+                </div>
+            <div class="form-group">
+                <label asp-for="thuoc_tinh" class="control-label">Thuộc tính</label>
+                @Html.Raw(ViewBag.thuoc_tinh_checkbox)
+            </div>
+            <div class="form-group collapse" id="extend">
+                <div class="form-group">
+                    <label asp-for="da_di_lam" class="control-label"></label>
+                    <select class="form-control" id="da_di_lam">
+                        <option value="true">Đã đi làm</option>
+                        <option value="false" selected>Chưa đi làm</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="ngay_di_lam" class="control-label"></label>
+                    <input class="form-control" placeholder="dd-MM-yyyy" id="ngay_di_lam"/>
+                    <span asp-validation-for="ngay_di_lam" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-info btn-extend" data-toggle="collapse" href="#extend">+Mở rộng</a>
+            </div>
+        </div>
+    </div>
+</form>
+<div id="back">
+    <a asp-action="All">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+
+    $(document).ready(function() {
+
+        $('ul.tabs li').click(function() {
+            var tab_id = $(this).attr('data-tab');
+
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content-add').removeClass('current');
+
+            $(this).addClass('current');
+            $("#" + tab_id).addClass('current');
+        });
+
+    });
+</script>
+
+<script asp-append-version="true" src="~/js/ung_vien.js"></script>

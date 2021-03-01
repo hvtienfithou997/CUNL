@@ -1,0 +1,66 @@
+﻿@model QLCUNL.Models.Job
+
+@{
+    ViewData["Title"] = "Gán JOB";
+}
+<h3>Gán JOB</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <ul>
+            <li class="list-group-item">
+                Chức danh
+                <span class="font-weight-bold"><label id="chuc_danh" /></span>
+            </li>
+
+            <li class="list-group-item">
+                Công ty
+                <span class="font-weight-bold"><label id="cong_ty" /></span>
+            </li>
+
+            <li class="list-group-item">
+                Tỉnh thành
+                <span class="font-weight-bold"><label id="tinh_thanh"></label></span>
+            </li>
+            <li class="list-group-item">
+                Địa chỉ
+                <span class="font-weight-bold"><label id="dia_chi"></label></span>
+            </li>
+            <li class="list-group-item">
+                Lương chính thức
+                <span class="font-weight-bold"><label id="luong_chinh_thuc" /></span>
+            </li>
+            <li class="list-group-item">
+                Ghi chú
+                <span class="font-weight-bold"><label id="ghi_chu" /></span>
+            </li>
+            <li class="list-group-item">
+                Ghi chú
+                <span class="font-weight-normal"><textarea id="noi_dung" disabled readonly style="width:100%;height:200px"></textarea></span>
+            </li>
+        </ul>
+        <div class="form-group">
+            <label class="control-label">Tài khoản đã nhận JOB</label>
+            <ul id="ul_user_job">
+            </ul>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Tài khoản</label>
+            @Html.Raw(ViewBag.all_user)
+        </div>
+        <div class="form-group">
+            <input type="button" value="Gán" class="btn-size btn btn-primary" onclick="onGrant()" />
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="All">Quay lại danh sách</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    let id = "@ViewBag.id";
+</script>
+<script asp-append-version="true" src="~/js/job_grant.js"></script>
+

@@ -1,0 +1,43 @@
+﻿@model QLCUNL.Models.UserJob
+
+@{
+    ViewData["Title"] = "Chia sẻ";
+}
+<h4>Chia sẻ thông tin JOB của tôi</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+            <div class="form-group" style="display:none;">
+                <label asp-for="id_user_job" class="control-label">Id User Job</label>
+                <input asp-for="id_user_job" readonly class="form-control" id="id_user_job" />
+                <span asp-validation-for="id_user_job" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_job" class="control-label">Id job</label>
+                <input asp-for="id_job" readonly class="form-control" id="id_job" />
+                <span asp-validation-for="id_job" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ngay_nhan_job" class="control-label">Ngày nhận job</label>
+                <input asp-for="ngay_nhan_job" readonly class="form-control" id="ngay_nhan_job" />
+                <span asp-validation-for="ngay_nhan_job" class="text-danger"></span>
+            </div>
+            <partial name="_ChiaSeNoiDung">
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    let id = "@ViewBag.id";
+</script>
+<script asp-append-version="true" src="~/js/user_job_edit.js"></script>
+

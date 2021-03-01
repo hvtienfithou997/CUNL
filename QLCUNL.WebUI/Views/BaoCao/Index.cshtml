@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Báo cáo doanh thu";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h1 class="text-center">BÁO CÁO DOANH THU</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="div-input form-group">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="label-control">Ngày nhận JOB từ</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input placeholder="dd-MM-yyyy" id="ngay_nhan_job_from" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label class="label-control">đến</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input placeholder="dd-MM-yyyy" id="ngay_nhan_job_to" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <button id="btn_search" class="btn-size btn btn-primary">Tìm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">
+                        STT
+                    </th>
+                    <th scope="col">
+                        Ngày nhận JOB
+                    </th>
+                    <th scope="col">
+                        Người tuyển dụng
+                    </th>
+                    <th scope="col">
+                        Địa điểm
+                    </th>
+                    <th scope="col">
+                        Vị trí
+                    </th>
+                    <th scope="col">
+                        Số lượng yêu cầu
+                    </th>
+                    <th scope="col">
+                        Đơn giá
+                    </th>
+                    <th scope="col">
+                        Đã cọc tiền / không cọc (Note số tiền)
+                    </th>
+                    <th scope="col">
+                        Số UVđã tuyển được
+                    </th>
+                    <th scope="col">
+                        Ngày tiếp nhận Đơn hàng
+                    </th>
+                    <th scope="col">
+                        Ngày UV đi làm
+                    </th>
+                    <th scope="col">
+                        Số UV cần tuyển tiếp
+                    </th>
+                    <th scope="col">
+                        Số tiền cần thanh toán /UV đã tuyển (Đơn giá x UV)
+                    </th>
+                    <th scope="col">
+                        Số tiền đã nhận
+                    </th>
+                    <th scope="col">
+                        Còn phải thanh toán/dự kiến
+                    </th>
+                    <th scope="col">
+                        Tình trạng thanh toán
+                    </th>
+                    <th scope="col">
+                        Hạn thanh toán
+                    </th>
+                    <th scope="col">
+                        Tình trạng thực hiện hợp đồng
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="table-hover" id="div_data">
+            </tbody>
+        </table>
+    </div>
+</div>
+<script asp-append-version="true" type="text/javascript" src="~/js/bao_cao.js"></script>
+<script>
+    $(function () {
+        $("#btn_search").click(function () {
+            search();
+        })
+        search();
+    })
+</script>

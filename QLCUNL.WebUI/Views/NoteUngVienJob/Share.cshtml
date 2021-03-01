@@ -1,0 +1,188 @@
+﻿@model QLCUNL.Models.NoteUngVienJob
+
+@{
+    ViewData["Title"] = "Chia sẻ thông tin";
+}
+<h3>Chia sẻ thông tin</h3>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="form-group" style="display:none;">
+            <label asp-for="id_note_ung_vien_job" class="control-label">Id note ứng viên job</label>
+            <input asp-for="id_note_ung_vien_job" readonly class="form-control" id="id_note_ung_vien_job" />
+            <span asp-validation-for="id_note_ung_vien_job" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="id_ung_vien" class="control-label">Ứng viên</label>
+            <input readonly class="form-control" id="ho_ten_ung_vien" />
+            <span asp-validation-for="id_ung_vien" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="id_job" class="control-label">JOB</label>
+            <input asp-for="id_job" readonly class="form-control" id="id_job" />
+            <span asp-validation-for="id_job" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ngay_gio_phong_van" class="control-label">Ngày giờ phỏng vấn</label>
+            <input asp-for="ngay_gio_phong_van" readonly class="form-control" id="ngay_gio_phong_van" />
+            <span asp-validation-for="ngay_gio_phong_van" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ngay_di_lam" class="control-label">Ngày đi làm</label>
+            <input asp-for="ngay_di_lam" readonly class="form-control" id="ngay_di_lam" />
+            <span asp-validation-for="ngay_di_lam" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label class="control-label"><strong>Chia sẻ cho nhà tuyển dụng</strong></label>
+                    <input type="text" name="id_nha_tuyen_dung" id="id_nha_tuyen_dung" class="form-control" placeholder="Email nhà tuyển dụng: tuyendung@xmedia.vn, tdung@goodcv.vn" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group d-none">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label class="control-label">Đến ngày</label><input class="form-control" id="ngay_het" value="@DateTime.Now.AddYears(10).ToString("dd-MM-yyyy")" placeholder="dd-MM-HH" />
+                </div>
+                <div class="col-sm-8">
+                    <label class="control-label">Quyền</label>
+                    @foreach (var item in Enum.GetValues(typeof(QLCUNL.Models.Quyen)))
+                    {
+                        <input name="quyen" type="checkbox" value="@item" @((QLCUNL.Models.Quyen)item == QLCUNL.Models.Quyen.VIEW ? " checked disabled" : "") /> @item
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label"><input type="checkbox" id="chk_all_user" />&nbsp;<strong>Chia sẻ theo tài khoản</strong></label>
+            @Html.Raw(ViewBag.all_user)
+        </div>
+        <div class="form-group">
+            <label class="control-label"><input type="checkbox" id="chk_all_team" />&nbsp;<strong>Chia sẻ theo nhóm</strong></label>
+
+            @if (ViewBag.list_team != null)
+            {
+                <ul class="check-box row">
+                    @foreach (var item in ViewBag.list_team)
+                    {
+                        <li class="col-md-4"><input type="checkbox" name="team_shared" value="@item.id_team"> @item.team_name</li>
+                    }
+                </ul>
+            }
+        </div>
+        <div class="form-group">
+            <input value="Chia sẻ" type="button" class="btn-size btn btn-primary" onclick="onShareUngVien('@ViewBag.id',@ViewBag.obj_type,1,1)" />
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    let id = "@ViewBag.id";
+</script>
+<script>
+    $(function () {
+        callAPI(`${API_URL}/NoteUngVienJob/view?id=${id}`, null, "GET", function (res) {
+            if (res.success) {
+                if (res.data != null && res.data != undefined && res.data != "") {
+
+                    $("#ho_ten_ung_vien").val(res.data.ho_ten_ung_vien);
+
+                    $("#id_job").val(`${res.data.ten_job} ${res.data.auto_id_job}`);
+
+                    for (var i = 0; i < res.data.thuoc_tinh.length; i++) {
+                        let tt = res.data.thuoc_tinh[i];
+                        $(`input[name='thuoc_tinh_nhom_${tt.nhom}'][value='${tt.gia_tri}']`).prop('checked', true);
+                        $(`input[name^='thuoc_tinh'][value='${tt.gia_tri}']`).prop('checked', true);
+                    }
+                    $("#ghi_chu").val(res.data.ghi_chu);
+                    $("#ngay_gio_phong_van").val(epochToTime(res.data.ngay_gio_phong_van));
+                    $("#ngay_di_lam").val(epochToTime(res.data.ngay_di_lam));
+                    $("#luong_thu_viec").val(formatCurency(res.data.luong_thu_viec));
+                    $("#luong_chinh_thuc").val(formatCurency(res.data.luong_chinh_thuc));
+
+                }
+            } else {
+                $.notify(`Lỗi xảy ra ${res.msg}`, "error");
+            }
+        });
+        $("#chk_all_user").click(function () {
+            $("[name='user_shared']").prop('checked', $("#chk_all_user").is(":checked"));
+        });
+        $("#chk_all_team").click(function () {
+            $("[name='team_shared']").prop('checked', $("#chk_all_team").is(":checked"));
+        });
+        callAPI(`${API_URL}/@(((QLCUNL.Models.PhanQuyenObjType)ViewBag.obj_type).ToString().ToLower().Replace("_",""))/shared?id=${id}`, null, "GET", function (res) {
+            if (res.success) {
+                var data = res.data;
+                let id_nha_tuyen_dung = [];
+                data.forEach(item => {
+                    let val = item.user;
+                    if (item.type === 2) {
+                        $(`input[name='team_shared'][value='${val}']`).prop('checked', true);
+                    } else {
+                        if (item.type === 1) {
+                            if ($(`input[name='user_shared'][value='${val}']`).length > 0) {
+                                $(`input[name='user_shared'][value='${val}']`).prop('checked', true);
+                            } else {
+                                id_nha_tuyen_dung.push(val);
+                            }
+                        }
+                    }
+                });
+                $("#id_nha_tuyen_dung").val(id_nha_tuyen_dung.join(","));
+            }
+        });
+    });
+    function onShareUngVien(id, obj_type, type, rule) {
+        try {
+            let users = [];
+            let id_nha_tuyen_dung = $("#id_nha_tuyen_dung").val();
+            $("[name='user_shared']:checked").each(function () {
+                users.push($(this).val());
+            });
+            let teams = [];
+            $("[name='team_shared']:checked").each(function () {
+                teams.push($(this).val());
+            });
+            if (typeof type === 'undefined') {
+                type = 1;
+            }
+            rule = 2;
+            let ngay_het = 0;
+
+            if ($("#ngay_het").val() !== "") {
+                ngay_het = toDate($("#ngay_het").val());
+            }
+            let quyen = [];
+            $("input[name='quyen']:checked").each(function () {
+                quyen.push($(this).val());
+            });
+            var obj = {
+                'user': users, 'type': type, 'rule': rule, 'obj_type': obj_type, 'teams': teams, 'id': id, 'ngay_het': ngay_het, 'quyen': quyen, 'id_nha_tuyen_dung': id_nha_tuyen_dung
+            };
+            callAPI(`${API_URL}/phanquyen/share`, obj, "POST", function (res) {
+                if (res.success) {
+                    $.notify("Chia sẻ thông tin thành công", "success");
+                } else {
+                    $.notify(`Lỗi xảy ra khi chia sẻ thông tin: ${res.msg}`, "error");
+                }
+            });
+        } catch (e) {
+            console.log(`onShare ${e}`);
+        }
+    }
+</script>
+

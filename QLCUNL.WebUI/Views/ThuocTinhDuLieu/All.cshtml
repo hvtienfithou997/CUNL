@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Danh sách thuộc tính dữ liệu";
+}
+
+<h1>All</h1>
+
+<div class="row">
+    <div class="col-sm-6">
+        <h3>Danh sách thuộc tính dữ liệu</h3>
+
+        <a class="btn btn-primary" asp-action="Add" style="color: #fff">Tạo mới</a>
+    </div>
+    <div class="col-sm-6">
+        <div class="div-input form-group">
+            <input placeholder="Tìm kiếm" name="term" class="form-control" />
+            <button id="btn_search" class="btn btn-primary">Tìm</button>
+        </div>
+        @*<div>
+                <label for="div_thuoc_tinh">Tìm kiếm theo <span data-toggle="collapse" data-target="#div_thuoc_tinh"><i class="arrow-down"></i></span></label>
+                <div id="div_thuoc_tinh" class="collapse">@Html.Raw(ViewBag.thuoc_tinh_checkbox)</div>
+            </div>*@
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Loại đối tượng
+            </th>
+            <th>
+                Id đối tượng
+            </th>
+            @*<th>
+                    Tên người dùng
+                </th>*@
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="all_thuoc_tinh_dl">
+    </tbody>
+</table>
+<script>
+    $(function () {
+
+        $(`[name='term']`).keypress(function (event) {
+            if (event.keyCode == 13) {
+                search($(this).val());
+            }
+        });
+        $("#btn_search").click(function () {
+            search($(`[name='term']`).val());
+        });
+        search('');
+    })
+</script>
+
+<script asp-append-version="true" src="~/js/thuoc_tinh_du_lieu.js"></script>

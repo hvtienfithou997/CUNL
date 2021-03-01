@@ -1,0 +1,59 @@
+﻿@model QLCUNL.Models.CongTy
+
+@{
+    ViewData["Title"] = "Thêm mới công ty";
+}
+<style>
+    .scrolling-wrapper {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+
+    .card {
+        display: inline-block;
+        width: 15%;
+    }
+
+    .check-box-inline {
+        display: inline-flex;
+    }
+
+        .check-box-inline ul {
+            display: inline-flex;
+        }
+
+            .check-box-inline ul li {
+                padding-right: 5px;
+            }
+</style>
+<h3>Tạo mới liên lạc công ty </h3>
+<hr />
+<div id="company-contact">
+    @for (var i = 1; i <= 6; i++)
+    {
+        <div class="scrolling-wrapper">
+            <input type="text" class='form-control card' placeholder="Tên công ty" name="ten_cong_ty" value="#Không rõ" />
+            <input type="text" class='form-control card' placeholder="Người liên hệ / chức danh" name="chuc_vu" value="" />
+            <input type="text" class='form-control card' placeholder="Email" name="email" value="" />
+            <input type="text" class='form-control card' placeholder="Số điện thoại" name="sdt" value="" />
+            <input type="text" class='form-control card' placeholder="Zalo" name="zalo" value="" />
+            <input type="text" class='form-control card' placeholder="Skype" name="skype" value="" />
+            <input type="text" class='form-control card' placeholder="Facebook" name="facebook" value="" />
+            <span class='check-box-inline'></span>
+        </div>
+        <br />
+    }
+</div>
+@*<div class="row">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-success" onclick="createNewRow(event)" id="add_new_row">Thêm dòng mới</button>
+        </div>
+    </div>*@
+
+<div class="row">
+    <div class="col-md-12">
+        <button class="btn-size btn btn-primary" onclick="saveCompany()"><i class="icon icon-add"></i> Thêm mới</button>
+    </div>
+</div>
+<script asp-append-version="true" src="~/js/cong_ty_quick.js"></script>

@@ -1,0 +1,16 @@
+F:\COde\QLCUNL.BL\bin\Debug\netstandard2.0\QLCUNL.BL.deps.json
+F:\COde\QLCUNL.BL\bin\Debug\netstandard2.0\QLCUNL.BL.dll
+F:\COde\QLCUNL.BL\bin\Debug\netstandard2.0\QLCUNL.BL.pdb
+F:\COde\QLCUNL.BL\bin\Debug\netstandard2.0\ESUtil.dll
+F:\COde\QLCUNL.BL\bin\Debug\netstandard2.0\QLCUNL.Models.dll
+F:\COde\QLCUNL.BL\bin\Debug\netstandard2.0\XUtil.dll
+F:\COde\QLCUNL.BL\bin\Debug\netstandard2.0\ESUtil.pdb
+F:\COde\QLCUNL.BL\bin\Debug\netstandard2.0\QLCUNL.Models.pdb
+F:\COde\QLCUNL.BL\bin\Debug\netstandard2.0\XUtil.pdb
+F:\COde\QLCUNL.BL\obj\Debug\netstandard2.0\QLCUNL.BL.csprojAssemblyReference.cache
+F:\COde\QLCUNL.BL\obj\Debug\netstandard2.0\QLCUNL.BL.AssemblyInfoInputs.cache
+F:\COde\QLCUNL.BL\obj\Debug\netstandard2.0\QLCUNL.BL.AssemblyInfo.cs
+F:\COde\QLCUNL.BL\obj\Debug\netstandard2.0\QLCUNL.BL.csproj.CoreCompileInputs.cache
+F:\COde\QLCUNL.BL\obj\Debug\netstandard2.0\QLCUNL.BL.csproj.CopyComplete
+F:\COde\QLCUNL.BL\obj\Debug\netstandard2.0\QLCUNL.BL.dll
+F:\COde\QLCUNL.BL\obj\Debug\netstandard2.0\QLCUNL.BL.pdb

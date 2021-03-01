@@ -1,0 +1,126 @@
+﻿@model QLCUNL.Models.NoteUngVienJob
+
+@{
+    ViewData["Title"] = "Thêm mới ứng viên";
+}
+<h3>Thêm mới ứng viên theo JOB</h3>
+<hr />
+<form id="validate-note-uv-add">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label asp-for="id_ung_vien" class="control-label">Tên ứng viên</label>
+                <select asp-for="id_ung_vien" class="form-control" id="id_ung_vien" name="id_ung_vien" required>
+                    <option>--Chọn từ danh sách--</option>
+                    @if (ViewBag.list_ung_vien != null)
+                    {
+                        foreach (var item in ViewBag.list_ung_vien)
+                        {
+                            <option value="@item.id_ung_vien">@item.ho_ten_ung_vien</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="id_ung_vien" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="id_job" class="control-label">Tên Job</label>
+                <select asp-for="id_job" class="form-control" id="id_job" name="id_job" required>
+                    <option>--Chọn từ danh sách--</option>
+                    @if (ViewBag.list_job != null)
+                    {
+                        foreach (var item in ViewBag.list_job)
+                        {
+                            <option value="@item.id_job">@item.chuc_danh</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="id_job" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="parent_id_ung_vien" class="control-label">Đổi cho ứng viên</label>
+                <select asp-for="parent_id_ung_vien" class="form-control" id="parent_id_ung_vien">
+                    <option>--Chọn từ danh sách--</option>
+                    @if (ViewBag.list_ung_vien != null)
+                    {
+                        foreach (var item in ViewBag.list_ung_vien)
+                        {
+                            <option value="@item.id_ung_vien">@item.ho_ten_ung_vien</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="parent_id_ung_vien" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ngay_gio_phong_van" class="control-label">Ngày giờ phỏng vấn</label>
+                <input asp-for="ngay_gio_phong_van" class="form-control" id="ngay_gio_phong_van" />
+                <span asp-validation-for="ngay_gio_phong_van" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ngay_di_lam" class="control-label">Ngày đi làm</label>
+                <input asp-for="ngay_di_lam" class="form-control" id="ngay_di_lam" />
+                <span asp-validation-for="ngay_di_lam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ghi_chu" class="control-label">Tóm tắt ứng viên</label>
+
+                <textarea class="form-control" id="ghi_chu"></textarea>
+                <span asp-validation-for="ghi_chu" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="luong_thu_viec" class="control-label">Lương thử việc</label>
+                <input class="form-control" id="luong_thu_viec" name="luong_thu_viec" onkeyup="splitInDots(this)"/>
+                <span asp-validation-for="luong_thu_viec" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="luong_chinh_thuc" class="control-label">Lương chính thức</label>
+                <input class="form-control" id="luong_chinh_thuc" name="luong_chinh_thuc" onkeyup="splitInDots(this)"/>
+                <span asp-validation-for="luong_chinh_thuc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="so_tien_da_nhan" class="control-label">Số tiền đã nhận</label>
+                <input asp-for="so_tien_da_nhan" class="form-control" id="so_tien_da_nhan" />
+                <span asp-validation-for="so_tien_da_nhan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="so_tien_tra_lai" class="control-label">Số tiền trả lại</label>
+                <input asp-for="so_tien_tra_lai" class="form-control" id="so_tien_tra_lai" />
+                <span asp-validation-for="so_tien_tra_lai" class="text-danger"></span>
+            </div>
+
+            <div class="form-group d-none">
+                <label asp-for="ghi_chu_nha_tuyen_dung" class="control-label">Ghi chú nhà tuyển dụng</label>
+                <input asp-for="ghi_chu_nha_tuyen_dung" class="form-control" id="ghi_chu_nha_tuyen_dung" />
+                <span asp-validation-for="ghi_chu_nha_tuyen_dung" class="text-danger"></span>
+            </div>
+
+            <div class="form-group d-none">
+                <label asp-for="ghi_chu_ung_vien" class="control-label">Ghi chú ứng viên</label>
+                <input asp-for="ghi_chu_ung_vien" class="form-control" id="ghi_chu_ung_vien" />
+                <span asp-validation-for="ghi_chu_ung_vien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="thuoc_tinh" class="control-label">Thuộc tính</label>
+                @Html.Raw(ViewBag.thuoc_tinh_checkbox)
+            </div>
+            <div class="form-group">
+                <button class="btn-size btn btn-primary" onclick="onSubmit(event)"><i class="icon icon-add"></i>Thêm</button>
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+    <a asp-action="All">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script asp-append-version="true" src="~/js/note_ung_vien_job.js"></script>

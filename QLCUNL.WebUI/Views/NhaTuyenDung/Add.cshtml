@@ -1,0 +1,156 @@
+﻿@model QLCUNL.Models.NhaTuyenDung
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Thêm mới nhà tuyển dụng";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Thông báo gửi nhà tuyển dụng</h3>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group text-right">
+            <button class="btn-size btn btn-primary" onclick="onSubmit(event)"><i class="icon icon-add"></i>Lưu</button>
+        </div>
+
+    </div>
+
+</div>
+<hr />
+<form id="validate-menu">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label">Email nhà tuyển dụng</label>
+                <input class="form-control" id="id_nha_tuyen_dung" />
+                <span class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label class="control-label">Send SMS</label>
+                <textarea class="form-control" id="send_sms"></textarea>
+                <span class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label class="control-label">JOB</label>
+                <span class="text-danger"></span>
+                <select class="form-control" id="id_job" name="id_job" onchange="SearchNoteUvJob(1)">
+                    @if (ViewBag.all_job != null)
+                    {
+                        foreach (var item in ViewBag.all_job)
+                        {
+                            <option value="@item.id_job">@item.chuc_danh (@item.id_auto)</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group d-none">
+                <label class="control-label">User JOB</label>
+                <input class="form-control" id="id_user_job" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Nội dung</label>
+                <textarea rows="8" class="form-control" id="noi_dung"></textarea>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="box col-md-4 d-none">
+    <div class="form-group search-by-id d-none">
+        <input placeholder="ID User" id="id_user" class="form-control" />
+        <input placeholder="ID Job" id="id_job1" class="form-control" value="@ViewBag.id_job" />
+        <input placeholder="ID Ứng Viên" id="id_ung_vien" class="form-control" value="@ViewBag.id_ung_vien" />
+    </div>
+    <div class="form-group search-by-datetime d-none">
+        <input placeholder="Ngày giờ phỏng vấn (từ)" id="ngay_gio_phong_van_from" class="form-control" />
+        <input placeholder="Ngày giờ phỏng vấn (đến)" id="ngay_gio_phong_van_to" class="form-control" />
+    </div>
+    <div class="form-group search-by-daywork d-none">
+        <input placeholder="Ngày đi làm (từ)" id="ngay_di_lam_from" class="form-control" />
+        <input placeholder="Ngày đi làm (đến)" id="ngay_di_lam_to" class="form-control" />
+    </div>
+    <div class="form-group search-by-salary d-none">
+        <input placeholder="Lương thử việc (từ)" id="luong_thu_viec_from" class="form-control" />
+        <input placeholder="Lương thử việc (đến)" id="luong_thu_viec_to" class="form-control" />
+    </div>
+    <div class="form-group search-by-salarymain d-none">
+        <input placeholder="Lương chính thức (từ)" id="luong_chinh_thuc_from" class="form-control" />
+        <input placeholder="Lương chính thức (đến)" id="luong_chinh_thuc_to" class="form-control" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Note ứng viên đã chọn: <span id="count-selected"></span></h3>
+        <div id="box-uv">
+            <div class="border-info" id="ung-vien-selected">
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-12 table-responsive">
+        <h3>Chọn note ứng viên JOB</h3>
+        <input placeholder="Tìm kiếm" id="term" name="term" class="form-control d-none" value="@Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.term))" />
+        @*<button id="btn_search" class="btn-size btn btn-primary">Tìm</button>*@
+
+        <div class="totalRecs text-right"></div>
+
+        <table id="table_data" class="display table  table-striped" style="width:100%">
+
+            <thead class="thead-light">
+
+                <tr>
+                    <th>Ứng viên</th>
+                    <th>
+                        Trạng Thái
+                    </th>
+                    <th>
+                        Giờ phỏng vấn
+                    </th>
+                    <th>
+                        Đi làm
+                    </th>
+                    <th>
+                        Lương thử / chính
+                    </th>
+                    <th>
+                        Ghi chú
+                    </th>
+                    <th>Chọn ứng viên</th>
+                </tr>
+            </thead>
+            <tbody id="div_data">
+            </tbody>
+        </table>
+    </div>
+    <div class="form-group">
+        <button class="btn-size btn btn-primary" onclick="onSubmit(event)"><i class="icon icon-add"></i>Lưu</button>
+    </div>
+    <div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+        <div class="d-flex text-center data-container">
+            <div class="paging">
+            </div>
+        </div>
+    </div>
+
+</div>
+<div>
+    <a asp-action="All">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script asp-append-version="true" src="~/js/nha_tuyen_dung.js"></script>
+<script>
+    $(`[name='term']`).keypress(function (event) {
+        if (event.keyCode == 13) {
+            SearchNoteUvJob(1);
+        }
+    });
+    SearchNoteUvJob(1);
+</script>

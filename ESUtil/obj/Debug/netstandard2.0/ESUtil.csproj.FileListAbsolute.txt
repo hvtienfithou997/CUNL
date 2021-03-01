@@ -1,0 +1,14 @@
+F:\COde\ESUtil\bin\Debug\netstandard2.0\ESUtil.deps.json
+F:\COde\ESUtil\bin\Debug\netstandard2.0\ESUtil.dll
+F:\COde\ESUtil\bin\Debug\netstandard2.0\ESUtil.pdb
+F:\COde\ESUtil\bin\Debug\netstandard2.0\QLCUNL.Models.dll
+F:\COde\ESUtil\bin\Debug\netstandard2.0\XUtil.dll
+F:\COde\ESUtil\bin\Debug\netstandard2.0\QLCUNL.Models.pdb
+F:\COde\ESUtil\bin\Debug\netstandard2.0\XUtil.pdb
+F:\COde\ESUtil\obj\Debug\netstandard2.0\ESUtil.csprojAssemblyReference.cache
+F:\COde\ESUtil\obj\Debug\netstandard2.0\ESUtil.AssemblyInfoInputs.cache
+F:\COde\ESUtil\obj\Debug\netstandard2.0\ESUtil.AssemblyInfo.cs
+F:\COde\ESUtil\obj\Debug\netstandard2.0\ESUtil.csproj.CoreCompileInputs.cache
+F:\COde\ESUtil\obj\Debug\netstandard2.0\ESUtil.csproj.CopyComplete
+F:\COde\ESUtil\obj\Debug\netstandard2.0\ESUtil.dll
+F:\COde\ESUtil\obj\Debug\netstandard2.0\ESUtil.pdb

@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Danh sách Email";
+}
+
+<script>
+    var token = '@ViewBag.ip';
+    var ded = '@ViewBag.Decode';
+</script>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="div-input form-group">
+            <select id="status" class="form-control" onchange="search()">
+                <option value="">Chọn trạng thái</option>
+                <option value="1">Mới</option>
+                <option value="2">Chờ</option>
+                <option value="3">Đã gửi</option>
+                <option value="4">Lỗi</option>
+                <option value="5">Hủy</option>
+            </select>
+        </div>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">
+                STT
+            </th>
+            <th scope="col">
+                Người nhận
+            </th>
+            <th scope="col">
+                Trạng thái
+            </th>
+            <th>Ngày tạo</th>
+        </tr>
+    </thead>
+    <tbody class="table-hover" id="div_data">
+    </tbody>
+</table>
+<div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+    <div class="d-flex text-center data-container">
+        <div class="paging">
+        </div>
+    </div>
+</div>
+<button class="btn btn-size btn-primary" onclick="updateStatusMail()">
+    Cập nhật danh sách
+</button>
+<script asp-append-version="true" type="text/javascript" src="~/js/send_mail.js"></script>

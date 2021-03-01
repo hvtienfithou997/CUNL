@@ -1,0 +1,51 @@
+﻿@model IEnumerable<QLCUNL.Models.Label>
+
+@{
+    ViewData["Title"] = "All";
+}
+
+<h1>All</h1>
+<p>
+    <a asp-action="Add">Create New</a>
+</p>
+<div class="wrap">
+    <div class="search">
+        <input type="text" class="searchTerm" placeholder="What are you looking for?">
+        <button type="submit" class="searchButton" onclick="onSearch()">
+            <i class="fa fa-search"></i>Search
+        </button>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id_label)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ten_label)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ngay_tao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nguoi_tao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ngay_sua)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nguoi_sua)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="table-data">
+    </tbody>
+</table>
+<div id="listingTable">
+</div>
+<a href="javascript:prevPage()" id="btn_prev">Prev</a>
+<a href="javascript:nextPage()" id="btn_next">Next</a>
+Page: <span id="page"></span>
+<script asp-append-version="true" src="~/js/label.js"></script>

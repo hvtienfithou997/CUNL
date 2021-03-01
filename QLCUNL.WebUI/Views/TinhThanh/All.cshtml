@@ -1,0 +1,56 @@
+﻿@model IEnumerable<QLCUNL.Models.User>
+
+@{
+    ViewData["Title"] = "Tất cả User";
+}
+
+<h1>Tất cả danh mục</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th>
+                Ngày tạo
+            </th>
+            <th>
+                Tên danh mục
+            </th>
+            <th>
+                Danh mục cha
+            </th>
+            <th>
+                Danh sách danh mục cha
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="all_user">
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.full_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_team)
+                </td>
+                
+                <td>
+                    <a href="edit?id=@item.id_user">Edit</a> |
+                    <a href="detail?id=@item.id_user">Detail</a> |
+                    @Html.ActionLink("Delete", "category/delete", new {/* id=item._id */})
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+
+<script asp-append-version="true" src="~/js/user.js"></script>

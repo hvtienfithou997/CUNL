@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "Chi tiết công ty";
+}
+
+<h3>Chi tiết công ty</h3>
+<hr />
+<p><a target="_blank" class="btn-size btn-warning text-light" href="/congty/edit?id=@ViewBag.id">Sửa công ty</a></p>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+       
+            <ul id="congty_detail" class="list-group list-group-flush">
+                
+                
+            </ul>
+        
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+<script asp-append-version="true" src="~/js/cong_ty.js"></script>
+<script>
+    let id = "@ViewBag.id";
+    $(function () {
+        if (typeof id !== 'undefined')
+            bindDetail(id);
+    })
+</script>

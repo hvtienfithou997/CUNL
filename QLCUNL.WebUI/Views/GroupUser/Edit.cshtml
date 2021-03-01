@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Sửa nhóm</h1>
+
+<div class="row">
+    <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">Tên nhóm</label>
+                <input class="form-control" id="team_name" />
+            </div>
+            <div class="form-group">
+                <button class="btn-size btn btn-primary" onclick="onSubmit()">Cập nhật</button>
+            </div>
+    </div>
+</div>
+<script>
+    let id = "@ViewBag.id";
+    $(function() {
+        bindDetail();
+    });
+</script>
+<script asp-append-version="true" src="~/js/group_user_edit.js"></script>

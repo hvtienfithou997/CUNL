@@ -1,0 +1,40 @@
+﻿@model QLCUNL.Models.Job
+
+@{
+    ViewData["Title"] = "Chia sẻ thông tin Menu";
+}
+<h3>Phân quyền Menu</h3>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label class="control-label">Menu</label>
+                    <input readonly class="form-control disabled" id="ten_menu" />
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label">URL</label>
+                    <input readonly class="form-control disabled" id="url" />
+                </div>
+            </div>
+        </div>
+
+        <partial name="_ChiaSeNoiDung">
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    let id = "@ViewBag.id";
+</script>
+<script asp-append-version="true" src="~/js/menu_edit.js"></script>
+

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<QLCUNL.Models.User>
+
+@{
+    ViewData["Title"] = "Tất cả User";
+}
+<div class="row">
+    <div class="col-sm-6">
+        <h3>Người dùng hệ thống</h3>
+    </div>
+    <div class="col-sm-6 text-right">
+        <a asp-action="Add" class="btn-size btn btn-primary" style="color: #fff">Tạo mới</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="div-input form-group">
+
+            <input placeholder="Tìm kiếm" name="term" class="form-control"/>
+            <button id="btn_search" class="btn-size btn btn-primary">Tìm</button>
+        </div>
+    </div>
+    <div class="col-md-6">
+    <div class="form-group">
+        <select class="form-control" id="group_user" name="group_user">
+                <option value="">--Chọn team--</option>
+                @if (ViewBag.all_team != null)
+                {
+                    foreach (var item in ViewBag.all_team)
+                    {
+                        <option value="@item.id_team">@item.team_name</option>
+                    }
+                }
+            </select>
+        
+    </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="totalRecs text-right">Tổng số bản ghi:</div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Người dùng
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Team
+                    </th>
+                    <th>
+                        Admin?
+                    </th>
+                    <th>Login cuối</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="div_data">
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="modal-reset-password" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Đặt lại mật khẩu</h4>
+            </div>
+            <div class="modal-body" id="reset-password">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                <button type="button" class="btn-size btn btn-info" data-submit="submit" onclick="resetPassword()">Đặt lại</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script asp-append-version="true" src="~/js/user.js"></script>
+<script>
+    $(function () {
+        $(`[name='term']`).keypress(function (event) {
+            if (event.keyCode == 13) {
+                search(1);
+            }
+        });
+        $("#btn_search").click(function () {
+            search(1);
+        });
+        search(1);
+    })
+</script>

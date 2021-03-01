@@ -1,0 +1,83 @@
+﻿@model IEnumerable<QLCUNL.Models.NoteUngVienJob>
+
+@{
+    ViewData["Title"] = "Danh sách Note ứng viên JOB";
+}
+
+<div class="row">
+    
+    <div class="col-md-7">
+        <h3 >Thông tin JOB</h3>
+        <div class="info-job-left">
+
+        </div>
+
+    </div>
+    <div class="col-md-5">
+        <h3 >Thông tin Công ty</h3>
+        <div class="info-job-right">
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <span class="col-md-12 totalRecs text-right">Tổng số ứng viên đã gán vào JOB:</span>
+
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table id="table_data" class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th></th><th></th>
+                    <th>
+                        Ứng viên
+                    </th>
+                    <th>Trạng thái</th>
+                    <th>
+                        Giờ phỏng vấn
+                    </th>
+                    <th>
+                        Đi làm
+                    </th>
+                    <th>
+                        Lương thử/chính
+                    </th>
+                    <th>
+                        Ghi chú
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="div_data" class="table-hover">
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="preview-job" role="dialog">
+    <div class="modal-dialog" style="max-width: 1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">CV ứng viên</h4>
+            </div>
+
+            <div class="modal-body" id="link_file_upload">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let id_job = "@ViewBag.id_job";
+    let id_ung_vien = "@ViewBag.id_ung_vien";
+    $(function () {
+        
+        search(1);
+        detailJob(id_job);
+    })
+</script>
+<script asp-append-version="true" type="text/javascript" src="~/js/view_ung_vien_theo_job.js"></script>

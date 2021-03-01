@@ -1,0 +1,114 @@
+﻿@model IEnumerable<QLCUNL.Models.User>
+
+@{
+    ViewData["Title"] = "Danh sách công ty";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Danh sách công ty</h3>
+    </div>
+    <div class="col-md-6 text-right">
+        <a asp-action="Add" class="btn-size btn btn-primary" style="color: #fff">Tạo mới</a>
+        <a asp-action="QuickCreateCompany" class="btn-size btn btn-primary" style="color: #fff">Tạo nhanh</a>
+    </div>
+</div>
+<label for="div_thuoc_tinh">Tìm kiếm theo:</label>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="div-input form-group">
+            <input placeholder="Tìm kiếm" name="term" value="@Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.term))" class="form-control" />
+            <button id="btn_search" class="btn-size btn btn-primary">Tìm</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="div_thuoc_tinh" class="collapse">@Html.Raw(ViewBag.thuoc_tinh_checkbox)</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 table-responsive">
+        <a href="/congty/sendmail/" class="btn btn-size btn-info" id="btn_send_mail" onclick="sendEmail()" title="Check chọn email của nhà tuyển dụng và gửi">Gửi Email</a>
+        <a href="/congty/totalmail/" class="btn btn-size btn-info float-right"  title="Danh sách email đã gửi">Danh sách Email</a>
+        <div class="totalRecs text-right">:</div>
+        <table class="table table-striped data-table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">
+                        Tên
+                    </th>
+                    <th scope="col">
+                        Số ĐKKD
+                    </th>
+                    <th scope="col">
+                        Mã số thuế
+                    </th>
+                    <th scope="col">
+                        Địa chỉ
+                    </th>
+                    <th scope="col">
+                        Điện thoại/Website
+                    </th>
+                    <th style="width: 165px"></th>
+                </tr>
+            </thead>
+            <tbody class="table-hover" id="div_data">
+                
+            </tbody>
+        </table>
+        <div id="tutorial"></div>
+    </div>
+    <div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+        <div class="d-flex text-center data-container">
+            <div class="paging">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Đánh dấu thuộc tính</h4>
+            </div>
+            <div class="modal-body" id="thuoc_tinh_du_lieu">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-info" data-submit="submit" onclick="onCreateThuocTinh('@QLCUNL.Models.LoaiThuocTinh.CONG_TY')">Lưu lại</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script asp-append-version="true" type="text/javascript" src="~/js/cong_ty.js"></script>
+<script>
+    let page = @ViewBag.page;
+    let tt_chung = "@ViewBag.thuoc_tinh";
+    let ttrieng = "@ViewBag.thuoc_tinh_rieng";
+    $(function () {
+        if (tt_chung.length > 0) {
+            let tmp = tt_chung.split(',');
+            tmp.forEach(item => {
+                $(`[name^='thuoc_tinh'][data-type='0'][value='${item}']`).prop('checked', true);
+            });
+        }
+        if (ttrieng.length > 0) {
+            let tmp = ttrieng.split(',');
+            tmp.forEach(item => {
+                $(`[name^='thuoc_tinh'][data-type='1'][value='${item}']`).prop('checked', true);
+            });
+        }
+        $(`[name='term']`).keypress(function (event) {
+            if (event.keyCode == 13) {
+                tt_chung = ""; ttrieng = "";
+                search(page);
+            }
+        });
+        $("#btn_search").click(function () {
+            tt_chung = ""; ttrieng = "";
+            search(page);
+        });
+        search(page);
+    })
+</script>

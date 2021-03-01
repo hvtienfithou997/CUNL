@@ -1,0 +1,102 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+}
+
+.div-input {
+    display: flex;
+    padding-right: 0;
+}
+.div-search {
+    padding-left: 0;
+}
+
+ul.check-box {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+#div_thuoc_tinh ul.check-box li {
+    padding: 10px;
+    float: left;
+}
+li input {
+    padding-right: 2px;
+}
+label i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+.arrow-down {
+    cursor: pointer;
+    margin-bottom: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+.arrow-up {
+    cursor: pointer;
+    margin-bottom: 3px;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+#div_thuoc_tinh {
+    display: block;
+    max-height: 110px;
+    overflow: auto;
+}
+#div_thuoc_tinh ul li:first-child {
+    font-weight: 600;
+}
+
+td:last-child {
+    padding-left: 0;
+    padding-right: 0;
+    min-width: 111px;
+}
+
+td button a{
+    color: #fff;
+}
+td button a:hover{
+    color: #fff;
+}
+#div_data tr td {
+    vertical-align: middle;
+}
+
+ul, li {
+    list-style: none;
+}
+
+.data-container {
+    width: 100%;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.data-container ul {
+    padding: 0;
+    margin: 0;
+}
+
+.data-container li {
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background: #eee;
+    color: #666;
+    display: inline;
+}
+.paginationjs-pages {
+    margin-bottom: 10px;
+}
+legend {
+    margin-bottom:3px
+}
+    legend h5, legend h4 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 16px;
+    }

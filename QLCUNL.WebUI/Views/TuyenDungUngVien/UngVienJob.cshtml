@@ -1,0 +1,163 @@
+﻿@model IEnumerable<QLCUNL.Models.UngVien>
+
+@{
+    Layout = "~/Views/Shared/_LayoutNhaTuyenDung.cshtml";
+    ViewData["Title"] = "Danh sách ứng viên";
+}
+<style>
+    .modal-body {
+        padding-bottom: 0;
+    }
+
+    textarea#content-send {
+        width: 100%;
+        box-sizing: border-box;
+        *direction: rtl;
+        display: block;
+        max-width: 100%;
+        line-height: 1.5;
+        height: 120px;
+        padding: 15px 15px 30px;
+        border-radius: 3px;
+        border: none;
+        font: 15px Open Sans, cursive;
+        transition: box-shadow 0.5s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        font-smoothing: subpixel-antialiased;
+        background: linear-gradient(#F9EFAF, #F7E98D);
+        background: -o-linear-gradient(#F9EFAF, #F7E98D);
+        background: -ms-linear-gradient(#F9EFAF, #F7E98D);
+        background: -moz-linear-gradient(#F9EFAF, #F7E98D);
+        background: -webkit-linear-gradient(#F2F2F2, #F2F2F2);
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <fieldset>
+            <legend>Thông tin JOB</legend>
+            <div id="info"></div>
+        </fieldset>
+        <hr />
+        <div class="font-weight-bold" id="content-send" style="line-height: 2.5; white-space:pre-line;"></div>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Danh sách ứng viên</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 table-responsive">
+        <div class="totalRecs text-right"></div>
+        <table id="table_data" class="display table  table-striped" style="width:100%">
+            <thead class="thead-light">
+                <tr>
+                    <th></th>
+                    <th>
+                        Họ tên
+                    </th>
+                    <th>
+                        Lương mong muốn
+                    </th>
+                    <th>
+                        Thời gian P/V
+                    </th>
+
+                    <th>
+                        Ghi chú
+                    </th>
+                    <th class="action"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+        <div class="d-flex text-center data-container">
+            <div class="paging">
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog" style="max-width: 1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Đánh dấu</h4>
+                    <h5 class="add_thuoc_tinh"></h5>
+                    <div>
+                        <button type="button" class="btn-size btn btn-default" data-dismiss="modal"> Đóng </button>
+                        <button type="button" class="btn-size btn btn-info" id="nha-tuyen-dung-submit" data-submit="submit" onclick="onCreateThuocTinh('@QLCUNL.Models.LoaiThuocTinh.UNG_VIEN')">Lưu lại</button>
+                    </div>
+                </div>
+                <div class="modal-body" id="agree">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" name="agree-interview" class="custom-control-input" id="agree-interview">
+                                <label class="custom-control-label" for="agree-interview">Đồng ý phỏng vấn ứng viên này</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" name="dismiss-interview" class="custom-control-input" id="dismiss-interview">
+                                <label class="custom-control-label" for="dismiss-interview">Từ chối phỏng vấn ứng viên này</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body" id="ngay_gio">
+                    <label for="ngay_gio_phong_van">Giờ phỏng vấn</label>
+                    <input type="text" class="form-control" placeholder="12:00 12-12-2020" name="ngay_gio_phong_van" id="ngay_gio_phong_van" value="" style="width: 50%;" />
+                </div>
+                <div class="modal-body" id="ghi_chu_ung_vien">
+                    <hr>
+                    <div class="form-group d-none">
+                        <input type="text" class="form-control" id="id_ung_vien_note_job">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Ghi chú (Nếu có nhiều khung giờ phỏng vấn, anh/chị điền vào ghi chú này)</label>
+                        <textarea class="form-control" rows="6" id="ghi_chu"></textarea>
+                        <label for="message-text" class="col-form-label text-danger">(Anh/chị note lại CV không phù hợp, để bên cung ứng lựa chọn U/V phù hợp hơn)</label>
+                    </div>
+                </div>
+                <div class="modal-body d-none" id="tom_tat_ung_vien">
+                    <hr>
+                    <label id="thong_tin_ttuv"></label>
+                    <textarea class="form-control" rows="4" disabled style="width:100%; border:none;" id="ghi_chu_tom_tat"></textarea>
+                </div>
+                <div class="modal-body" id="cv_ung_vien">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn-size btn btn-info" id="nha-tuyen-dung-submit" data-submit="submit" onclick="onCreateThuocTinh('@QLCUNL.Models.LoaiThuocTinh.UNG_VIEN')">Lưu lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="preview-cv" role="dialog">
+    <div class="modal-dialog" style="max-width: 1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">CV Ứng Viên</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>autosize(document.querySelectorAll('#content-send'));</script>
+<script asp-append-version="true" type="text/javascript" src="~/js/nha_tuyen_dung_ung_vien_job.js"></script>
+<script>
+    let id = "@ViewBag.id";
+    let id_ung_vien = "@ViewBag.id_ung_vien";
+    let token = "@ViewBag.token1";
+    let log = "@ViewBag.log";
+    $(function () {
+        search(1);
+    });
+</script>

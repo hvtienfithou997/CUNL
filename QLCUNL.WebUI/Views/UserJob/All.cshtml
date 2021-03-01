@@ -1,0 +1,126 @@
+﻿@model IEnumerable<QLCUNL.Models.UserJob>
+
+@{
+    ViewData["Title"] = "Danh sách JOB của tôi";
+}
+<style>
+    td.details-control {
+        background: url('/lib/datatables/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.details td.details-control {
+        background: url('/lib/datatables/details_close.png') no-repeat center center;
+    }
+
+    td:last-child {
+        display: table-cell;
+        min-width: 150px;
+    }
+</style>
+<div>
+    <h3>JOB của tôi</h3>
+</div>
+<label>Tìm kiếm theo: </label>
+<div class="row">
+    <div class="col-sm-7">
+        <div class="div-input form-group">
+            <input placeholder="Tìm kiếm" name="term" value="@Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.term))" class="form-control" />
+            <button id="btn_search" class="btn-size btn btn-primary">Tìm</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div>
+            <div id="div_thuoc_tinh" class="collapse">@Html.Raw(ViewBag.thuoc_tinh_checkbox)</div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="totalRecs text-right">Tổng số bản ghi:</div>
+        <table id="table_data" class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        JOB
+                    </th>
+                    <th>
+                        Công ty
+                    </th>
+                    <th>
+                        Ngày nhận Job
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                        Thuộc Tính
+                    </th>
+                    <th>
+                        Số lượng
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+    <div class="d-flex text-center data-container">
+        <div class="paging">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Đánh dấu thuộc tính</h4>
+            </div>
+            <div class="modal-body" id="thuoc_tinh_du_lieu">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-info" data-submit="submit" onclick="onCreateThuocTinh('@QLCUNL.Models.LoaiThuocTinh.UNG_VIEN')">Lưu lại</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script asp-append-version="true" src="~/js/user_job.js"></script>
+<script>
+    let page = @ViewBag.page;
+    let tt_chung = "@ViewBag.thuoc_tinh";
+    let ttrieng = "@ViewBag.thuoc_tinh_rieng";
+
+    $(function () {
+        if (tt_chung.length > 0) {
+            let tmp = tt_chung.split(',');
+            tmp.forEach(item => {
+                $(`[name^='thuoc_tinh'][data-type='0'][value='${item}']`).prop('checked', true);
+            });
+        }
+        if (ttrieng.length > 0) {
+            let tmp = ttrieng.split(',');
+            tmp.forEach(item => {
+                $(`[name^='thuoc_tinh'][data-type='1'][value='${item}']`).prop('checked', true);
+            });
+        }
+
+        $(`[name='term']`).keypress(function (event) {
+            if (event.keyCode == 13) {
+                tt_chung = ""; ttrieng = "";
+                search(page);
+            }
+        });
+        $("#btn_search").click(function () {
+            tt_chung = ""; ttrieng = "";
+            search(page);
+        });
+        search(page);
+    })
+</script>

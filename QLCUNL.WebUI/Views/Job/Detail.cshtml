@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Chi tiết JOB";
+}
+
+<h1>Chi tiết JOB</h1>
+<hr />
+<p><a target="_blank" class="btn-size btn-warning text-light" href="/job/edit?id=@ViewBag.id">Sửa JOB</a></p>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        
+            <ul id="job_detail">
+
+            </ul>
+       
+    </div>
+    <div id="job-note" class="col-md-12">
+        
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+<script>
+    let id = "@ViewBag.id";
+    $(function () {
+        if (typeof id !== 'undefined')
+            bindDetail(id);
+    })
+</script>
+<script asp-append-version="true" src="~/js/job.js"></script>

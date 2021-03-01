@@ -1,0 +1,132 @@
+﻿@using QLCUNL.Models
+@model QLCUNL.Models.User
+
+@{
+    ViewData["Title"] = "Add";
+    var default_setting = (UserSetting)ViewBag.default_setting;
+    if (default_setting == null)
+        default_setting = new UserSetting();
+}
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group d-none">
+            <label asp-for="user_name" class="control-label">Tên đăng nhập</label>
+            <input asp-for="user_name" class="form-control" id="user_name" />
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="email" class="control-label">Tên đăng nhập / Email</label>
+            <input asp-for="email" class="form-control" id="email" />
+            <span asp-validation-for="email" class="text-danger"></span>
+        </div>
+       
+        <div class="form-group">
+            <label class="control-label">Mật khẩu</label>
+            <input class="form-control" type="password" id="password" />
+        </div>
+        <div class="form-group">
+            <label asp-for="full_name" class="control-label">Họ tên</label>
+            <input asp-for="full_name" class="form-control" id="full_name" />
+            <span asp-validation-for="full_name" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            <label asp-for="id_team" class="control-label">ID Team</label>
+            <select asp-for="id_team" class="form-control" id="id_team">
+                <option value="0">--Chọn từ danh sách--</option>
+                @if (ViewBag.list_team != null)
+                {
+                    foreach (var item in ViewBag.list_team)
+                    {
+                        <option value="@item.id_team">@item.team_name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="id_team" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group d-none">
+            <label class="control-label">Cấu hình mặc định</label>
+            <div class="row">
+                @if (User.IsInRole(Role.SYS_ADMIN.ToString()) || User.IsInRole(Role.APP_ADMIN.ToString()))
+                {
+                    <div class="col-sm-12">
+                        <label class="control-label">Tìm ứng viên trong mọi TEAM</label> <input type="checkbox" id="tim_ung_vien_team_khac" />
+                    </div>
+                }
+                <div class="col-sm-4">
+                    <label class="control-label">Tiền cọc</label> <input class="form-control" type="text" id="tien_coc" value="@default_setting.tien_coc" />
+                </div>
+                <div class="col-sm-4">
+                    <label class="control-label">Bảo hành</label> <input class="form-control" type="text" id="bao_hanh" value="@default_setting.bao_hanh" />
+                </div>
+                <div class="col-sm-4">
+                    <label class="control-label">Số lần đổi</label> <input class="form-control" type="text" id="so_lan_doi" value="@default_setting.so_lan_doi" />
+                </div>
+            </div>
+        </div>
+        @if (User.IsInRole(Role.SYS_ADMIN.ToString()) || User.IsInRole(Role.APP_ADMIN.ToString()))
+        {
+            <div class="form-group">
+                <label asp-for="type" class="control-label">Role</label>
+                <ul class="check-box">
+                    @foreach (var item in Enum.GetValues(typeof(Role)))
+                    {
+
+                        @if ((Role)item == Role.SYS_ADMIN)
+                        {
+                            @if (User.IsInRole(Role.SYS_ADMIN.ToString()))
+                            {
+                                <li>
+                                    <input type="checkbox" name="role" value="@Enum.GetName(typeof(Role),item)">
+                                    @Enum.GetName(typeof(Role), item)
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li>
+                                <input type="checkbox" name="role" value="@Enum.GetName(typeof(Role),item)">
+                                @Enum.GetName(typeof(Role), item)
+                            </li>
+                        }
+
+                    }
+                </ul>
+            </div>
+            <div class="form-group">
+                <label asp-for="trang_thai" class="control-label">Trạng thái</label>
+                <select asp-for="trang_thai" asp-items="@Html.GetEnumSelectList<TrangThai>()" class="form-control"></select>
+            </div>
+            @if (User.IsInRole(Role.SYS_ADMIN.ToString()))
+            {
+                <div class="form-group">
+                    <label asp-for="app_id" class="control-label">APP ID</label>
+                    <input asp-for="app_id" class="form-control" id="app_id" />
+                </div>
+            }
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <button class="btn-size btn btn-primary" onclick="onSubmit()"><i class="icon icon-add"></i>Thêm</button>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
+
+
+<script asp-append-version="true" src="~/js/user.js"></script>

@@ -1,0 +1,75 @@
+﻿@using QLCUNL.Models
+@model QLCUNL.Models.ThuocTinh
+
+@{
+    ViewData["Title"] = "Sửa thuộc tính";
+    List<User> all_user = (List<User>)ViewBag.all_user;
+}
+<h3>Chỉnh sửa thuộc tính</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="ten" class="control-label"></label>
+            <input asp-for="ten" class="form-control" id="ten" />
+            <span asp-validation-for="ten" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="nhom" class="control-label"></label>
+            <input asp-for="nhom" class="form-control" id="nhom" />
+            <span asp-validation-for="nhom" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Cho đối tượng</label>
+            <select class="form-control" asp-for="loai" asp-items="Html.GetEnumSelectList<LoaiThuocTinh>()">
+                <option selected="selected" value="-1">---Thuộc tính---</option>
+            </select>
+            <span asp-validation-for="loai" class="text-danger"></span>
+        </div>
+
+        @if (User.IsInRole(Role.SYS_ADMIN.ToString()) || User.IsInRole(Role.APP_ADMIN.ToString()))
+        {
+            <div class="form-group">
+                <label asp-for="nguoi_tao" class="control-label"></label>
+                <select class="form-control" asp-for="nguoi_tao">
+                    @foreach (var item in all_user)
+                    {
+                        @if (User.Identity.Name == item.user_name)
+                        {
+                            <option value="@item.user_name" selected="selected">@item.user_name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.user_name">@item.user_name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="type" class="control-label"></label>
+                <select class="form-control" asp-for="type" asp-items="Html.GetEnumSelectList<ThuocTinhType>()">
+                </select>
+                <span asp-validation-for="type" class="text-danger"></span>
+            </div>
+        }
+
+        <div class="form-group">
+            <button class="btn btn-primary" onclick="onUpdate()"><i class="icon icon-update"></i>Cập nhật</button>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    let id = "@ViewBag.id";
+</script>
+<script asp-append-version="true" src="~/js/thuoc_tinh_edit.js"></script>
+

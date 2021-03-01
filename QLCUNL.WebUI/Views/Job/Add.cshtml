@@ -1,0 +1,264 @@
+﻿@model QLCUNL.Models.Job
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" />
+<script asp-append-version="true" type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+
+@{
+    ViewData["Title"] = "Tạo mới JOB";
+    QLCUNL.Models.UserSetting settings = new QLCUNL.Models.UserSetting();
+    try
+    {
+        settings = (QLCUNL.Models.UserSetting)ViewBag.Settings ?? new QLCUNL.Models.UserSetting();
+    }
+    catch (Exception)
+    {
+        settings = new QLCUNL.Models.UserSetting();
+    }
+
+}
+<div class="row">
+    <div class="col-md-6">
+        <h3>Tạo mới JOB</h3>
+    </div>
+    <div class="col-md-6 text-right d-none">
+        <button class="btn-size btn btn-info" data-toggle="modal" data-target="#quick-create-uv">Tạo nhanh ứng viên</button>
+    </div>
+</div>
+<hr />
+<form id="validate-add-job" data-toggle="validator" role="form">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label asp-for="chuc_danh" class="control-label">Chức danh</label>
+                        <input asp-for="chuc_danh" class="form-control" id="chuc_danh" name="chuc_danh" placeholder="Nhân viên triển khai..." />
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">ID</label>
+                        <input class="form-control" id="auto_id" name="auto_id" placeholder="AUTO_ID JOB" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">Độ ưu tiên</label>
+                    <select class="form-control" id="do_uu_tien" name="do_uu_tien" required>
+                        <option value="">Chọn cấp độ ưu tiên</option>
+                        <option value="1">Cấp 1</option>
+                        <option value="2">Cấp 2</option>
+                        <option value="3">Cấp 3</option>
+                        <option value="4">Cấp 4</option>
+                        <option value="5">Cấp 5</option>
+                    </select>
+                    <label class="control-label"><b>(Cấp 5 cao nhất)</b></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="tinh_thanh" class="control-label">Tỉnh thành</label>
+                <select asp-for="tinh_thanh" class="form-control" id="tinh_thanh" name="tinh_thanh">
+
+                    @if (ViewBag.list_tinh_thanh != null)
+                    {
+                        foreach (var item in ViewBag.list_tinh_thanh)
+                        {
+                            <option value="@item.id_tinh">@item.ten_tinh</option>
+                        }
+                    }
+                </select>
+                <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-inline form-group">
+                <div style="width: 20%">
+                    <label asp-for="luong_chinh_thuc" class="control-label">Lương chính thức (VND)</label>
+                    <input style="width: 90%" class="form-control" id="luong_chinh_thuc" name="luong_chinh_thuc" onkeyup="splitInDots(this)" placeholder="15000000" />
+                    <div class="help-block with-errors"></div>
+                </div>
+                <div style="width: 60%">
+                    <label asp-for="luong_chinh_thuc_text" class="control-label">Lương chính thức(viết bằng chữ)</label>
+                    <input style="width: 90%" class="form-control" id="luong_chinh_thuc_text" />
+                </div>
+                <div style="width: 20%">
+                    <label asp-for="so_luong" class="control-label">Số lượng</label>
+                    <input style="width: 100%" class="form-control" id="so_luong" name="so_luong" value="1" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="cong_ty" class="control-label">Công ty</label>
+                <div class="form-inline">
+                    <input type="text" id="contain-id" class="form-control d-none" value="" />
+                    <select class="form-control" id="cong_ty_add" name="cong_ty_add" placeholder="Tên công ty..." autocomplete="on">
+                    </select>
+                    <div class="help-block with-errors"></div>
+                    <div id="edit-company">
+                    </div>
+                </div>
+                <button class="btn-size btn btn-info" id="btn_add_cong_ty" onclick="createCompany(event)"> Tạo mới công ty</button>
+                <div class="d-none add-cong-ty form-group">
+                    <fieldset class="w-100">
+                        <legend>Nhập tên công ty: </legend>
+                        <input type="text" name="new-cong-ty" id="new-cong-ty" class="form-control" value="" /><br>
+                        <div class="form-group">
+                            <label class="control-label">Liên hệ</label>
+                            <div class="" id="contact"></div>
+                            <span class="text-danger"></span>
+                            @*<button class="btn btn-info" onclick="addContact(event)">Thêm liên hệ</button>*@
+                        </div>
+
+                        <button class="btn-size btn btn-danger float-right" id="btn-dismiss">Hủy</button>&nbsp;&nbsp;
+                        <button class="btn-size btn btn-success float-right" onclick="saveCompany(event)">Lưu công ty</button>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="collapse" id="collapse_info">
+                <div class="form-inline">
+                    <div style="width: 50%">
+                        <label asp-for="don_gia" class="control-label">Đơn giá (VND)</label>
+                        <input type="radio" name="rad_don_gia" value="giacodinh" checked /> Giá cố định
+                        <input type="radio" name="rad_don_gia" value="theoluong" /> Theo lương
+                        <input class="form-control" id="don_gia" name="don_gia" onkeyup="splitInDots(this)" value="0" />
+                        <input class="form-control d-none" id="percent_salary" />
+                    </div>
+                    <div style="width: 50%">
+                        <label asp-for="thoi_han_bao_hanh" class="control-label">Thời hạn bảo hành</label>
+                        <input asp-for="thoi_han_bao_hanh" class="form-control" id="thoi_han_bao_hanh" value="@settings.bao_hanh" />
+                        <span asp-validation-for="thoi_han_bao_hanh" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div style="width: 15%">
+                        <label asp-for="so_lan_doi_toi_da" class="control-label">Đổi tối đa</label>
+                        <input asp-for="so_lan_doi_toi_da" class="form-control" placeholder="Số lần đổi tối đa" id="so_lan_doi_toi_da" name="so_lan_doi_toi_da" style="width:50px" value="@settings.so_lan_doi" />
+                        <span asp-validation-for="so_lan_doi_toi_da" class="text-danger"></span>
+                    </div>
+                    <div style="width: 40%">
+                        <label asp-for="tien_coc" class="control-label">Tiền cọc(VND)</label>
+                        <input class="form-control" id="tien_coc" onkeyup="splitInDots(this)" style="width:200px" value="@settings.tien_coc" />
+                    </div>
+                    <div style="width: 45%">
+                        <label class="control-label">Trả bảo hành(VND/%)</label>
+                        <input class="form-control" id="tien_coc_tra_lai" value="0" placeholder="Số tiền HOẶC %" onkeyup="splitInDots(this)" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <ul class="tabs">
+                        <li class="tab-link current" data-tab="tab-1">Link job</li>
+                        <li class="tab-link" data-tab="tab-2">Upload File</li>
+                    </ul>
+                    <div id="tab-1" class="tab-content-add current">
+                        <label asp-for="link_job" class="control-label">Link Job</label>
+                        <input type="text" class="form-control" id="link_job" placeholder="vd.https://google.com.vn" />
+                        <a href="/job/preview" type='button' class='btn btn-info d-none' target="_blank" id='preview_jd'>Xem trước</a>
+                    </div>
+                    <div id="tab-2" class="tab-content-add">
+                        <input type="file" id="file_upload" value="" />
+                        <input type='button' class='btn btn-info' value='Upload' id='btn_upload'>
+                        <input type="text" id="link_job_upload" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width:100%" class="collapse col" id="collapse_info">
+            <div class="form-group">
+                <label asp-for="thuoc_tinh" class="control-label">Thuộc tính</label>
+                @Html.Raw(ViewBag.thuoc_tinh_checkbox)
+            </div>
+            <br><br><br><br>
+            <div class="form-group">
+                <label class="control-label">Ngày nhận hợp đồng (dd-MM-yyyy)</label>
+                <input type="text" id="ngay_nhan_hd" placeholder="dd-MM-yyyy" class="form-control" />
+            </div>
+        </div>
+
+        <div class="col-md-12 collapse" id="collapse_info">
+            <div class="form-group">
+                <label asp-for="ghi_chu" class="control-label">Ghi chú</label>
+                <textarea asp-for="ghi_chu" class="form-control" id="ghi_chu"></textarea>
+                <span asp-validation-for="ghi_chu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nguoi_lien_he" class="control-label">Người liên hệ</label>
+                <textarea asp-for="nguoi_lien_he" class="form-control" id="nguoi_lien_he"></textarea>
+                <span asp-validation-for="nguoi_lien_he" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dia_chi" class="control-label">Địa chỉ</label>
+                <textarea asp-for="dia_chi" class="form-control" id="dia_chi" name="dia_chi"></textarea>
+                <span asp-validation-for="dia_chi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="noi_dung" class="control-label">Nội dung</label>
+                <button class="btn btn-info" id="btn-preview" data-toggle="modal" data-target="#preview-content"> Xem trước</button>
+                <textarea asp-for="noi_dung" class="form-control" rows="10" type="" id="noi_dung"></textarea>
+                <span asp-validation-for="noi_dung" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn-size btn btn-primary" onclick="onSubmit(event)"><i class="fa fa-add"></i>Thêm mới</button>
+        <a class="btn btn-size btn-success text-light text-center show" id="extend-add" data-toggle="collapse" href="#collapse_info"> +Mở rộng</a>
+    </div>
+</form>
+<div class="modal fade" id="preview-content" role="dialog">
+    <div class="modal-dialog" style="max-width: 1000px">
+        <div class="modal-content">
+            <div class="modal-body" id="content_ung_vien">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="quick-create-uv" role="dialog">
+    <div class="modal-dialog" style="max-width: 1000px">
+        <div class="modal-content">
+            <div class="modal-body" style="min-height: 500px" id="quick-uv">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="All">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+
+    $(document).ready(function () {
+        $("#quick-uv").html(`<iframe src="/ungvien/add" id="iframe-add-uv" onload="loadIframe()"></iframe>`);
+
+        $('ul.tabs li').click(function () {
+            var tab_id = $(this).attr('data-tab');
+
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content-add').removeClass('current');
+
+            $(this).addClass('current');
+            $("#" + tab_id).addClass('current');
+        });
+
+    });
+    function loadIframe() {
+        var iframe = document.getElementById('iframe-add-uv');
+        var element = iframe.contentWindow.document.querySelector('header');
+        var els = iframe.contentWindow.document.getElementById('back');
+        element.classList.add("mystyle");
+        els.classList.add("mystyle");
+    }
+</script>
+<script asp-append-version="true" src="~/js/job.js"></script>

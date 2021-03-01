@@ -1,0 +1,32 @@
+﻿@model QLCUNL.Models.Label
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Add label</h1>
+
+<h4>Label</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="ten_label" class="control-label">Label Name</label>
+                <input asp-for="ten_label" class="form-control" id="ten_label"/>
+                <span asp-validation-for="ten_label" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="onSubmit()"><i class="icon icon-add"></i>Thêm</button>
+            </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script asp-append-version="true" src="~/js/label.js"></script>

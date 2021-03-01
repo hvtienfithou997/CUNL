@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "Chi tiết";
+}
+
+<h1>Chi tiết tỉnh thành</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <details open>
+            <summary>Thông tin tỉnh thành bao gồm:</summary>
+            <ul id="tinhthanh_detail">
+                @*<li style="display:none;">ID : @ViewBag.tinhthanh.id_tinh</li>
+                <li>Username : @ViewBag.tinhthanh.ten_tinh</li>
+                <li>Full name : @ViewBag.tinhthanh.ten_viet_tat</li>*@
+                
+                
+            </ul>
+        </details>
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+<script asp-append-version="true" src="~/js/tinh_thanh.js"></script>

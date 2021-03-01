@@ -1,0 +1,66 @@
+﻿@model IEnumerable<QLCUNL.Models.Menu>
+
+@{
+    ViewData["Title"] = "Danh sách menu";
+}
+<div class="row">
+    <div class="col-sm-6"><h3>Danh sách menu</h3></div>
+    <div class="col-sm-6 text-right"><a class="btn-size btn btn-primary" asp-action="Add" style="color: #fff">Tạo mới</a></div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="div-input form-group">
+            <input placeholder="Tìm kiếm" name="term" class="form-control" />
+            <button id="btn_search" class="btn-size btn btn-primary">Tìm</button>
+        </div>
+        
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="totalRecs text-right">Tổng số menu:</div>
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">
+                        Tên menu
+                    </th>
+                    <th scope="col">
+                        URL
+                    </th>
+                    <th scope="col">
+                        Thứ tự
+                    </th>
+                    <th style="width: 155px"></th>
+                </tr>
+            </thead>
+            <tbody class="table-hover" id="div_data">
+            </tbody>
+
+        </table>
+    </div>
+    <div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+        <div class="d-flex text-center data-container">
+            <div class="paging">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script asp-append-version="true" type="text/javascript" src="~/js/menu.js"></script>
+<script>
+    $(function () {
+
+        $(`[name='term']`).keypress(function (event) {
+            if (event.keyCode == 13) {
+                search(1);
+            }
+        });
+        $("#btn_search").click(function () {
+            search(1);
+        });
+        search(1);
+    })
+</script>
+

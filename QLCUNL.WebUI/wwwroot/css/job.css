@@ -1,0 +1,6 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+}
+.table thead tr th { vertical-align: top;}
+#all_job tr td  {vertical-align: middle}

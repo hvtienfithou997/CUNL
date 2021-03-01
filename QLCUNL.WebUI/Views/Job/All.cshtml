@@ -1,0 +1,320 @@
+﻿@model QLCUNL.Models.Job
+
+@{
+    ViewData["Title"] = "Danh sách JOB";
+}
+<div class="row">
+    <div class="col-sm-5">
+        <h3>Danh sách JOB</h3>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-sm-3 text-right"><a asp-action="Add" class="btn-size btn btn-primary" style="color: #fff">Tạo mới</a></div>
+</div>
+<label>Tìm kiếm theo: </label>
+<div class="row">
+    <div class="col-sm-5">
+        <div class="div-input form-group">
+            <input placeholder="Auto ID, Tên JOB..." name="term" class="form-control" value="@Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.term))" />
+            <button id="btn_search" class="btn-size btn btn-primary">Tìm</button>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            @*<select asp-for="cong_ty" class="form-control" id="cong_ty" name="cong_ty" autocomplete="off" placeholder="Công ty..." data-noresults-text="Không tìm thấy công ty">
+                    <option value="">--Chọn công ty--</option>
+                </select>*@
+
+            <input type="text" class="form-control" placeholder="Nhập tên công ty" id="cong_ty" name="cong_ty" value="" />
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <input type="text" placeholder="Tìm theo ngày nhận hợp đồng" title="Tìm theo ngày nhận hợp đồng" id="ngay_nhan_hd" class="form-control" />
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="form-group">
+            <select class="form-control" id="value_filter" name="value_filter" onchange="search(1)">
+                <option selected="selected" value="1">JOB của tôi</option>
+                <option value="2">JOB cùng Team</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <a class="btn-size btn btn-success show" style="padding: 0 2px !important" id="btn_expand_thuoc_tinh" href="javascript:void(0)">
+                    + Mở rộng tìm thuộc tính
+                </a>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="/congty/sendmail/" class="btn btn-size btn-info" id="btn_send_mail" onclick="sendEmail()" title="Check chọn liên hệ và gửi mail">Gửi Email</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 collapse" id="thuoc_tinh_2">
+    <div class="row">
+        <div class="col-md-6">
+            <span class="font-weight-bold"> Sắp xếp theo: </span>
+            <div class="form-group form-inline">
+                <select class="form-control" id="field_sort" style="width:30%">
+                    <option selected="selected" value="id_auto.keyword"> ID</option>
+                    <option value="do_uu_tien">Độ ưu tiên</option>
+                </select>
+                &nbsp;&nbsp;&nbsp;
+                <select class="form-control" id="sort">
+                    <option selected="selected" value="0">Giảm</option>
+                    <option value="1">Tăng</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <span class="font-weight-bold"> Ngày tạo JOB: </span>
+            <div class="form-group form-inline">
+                <input type="text" placeholder="Ngày tạo từ..." title="Tìm theo ngày tạo" class="form-control custom" id="ngay_tao_from" />&nbsp;&nbsp;&nbsp;
+                <input type="text" placeholder="đến..." title="Tìm theo ngày tạo" class="form-control custom" id="ngay_tao_to" />
+            </div>
+        </div>
+    </div>
+    <span class="adjust">
+        <label class="font-weight-bold">Chứa tất cả</label> <input type="radio" name="op" value="1" checked />
+    </span>
+    <span class="adjust">
+        <label class="font-weight-bold">Chứa bất kỳ</label> <input type="radio" name="op" value="0" />
+    </span>
+    <span class="adjust">
+        <label class="font-weight-bold">Không chứa</label> <input type="radio" name="op" value="2" />
+    </span>
+    <span type='button' class='btn-danger remove-element'> Bỏ chọn</span>
+    <span style="padding-left: 30px;">
+    </span>
+
+    <div id="div_thuoc_tinh">@Html.Raw(ViewBag.thuoc_tinh_checkbox)</div>
+    <a class="btn-size btn btn-success show" style="padding:0 2px !important" id="btn_expand_thuoc_tinh_down" href="javascript:void(0)">+ Mở rộng tìm thuộc tính</a>
+    <div class="col-md-12"></div>
+</div>
+
+<div class="col-md-12 collapse" id="thuoc_tinh_down">
+
+    <div class="" style="border-top:1px solid #333">
+        <span class="adjust">
+            <label class="font-weight-bold">
+                Chứa tất cả
+            </label> <input type="radio" name="op2" value="1" checked />
+        </span>
+        <span class="adjust">
+            <label class="font-weight-bold">
+                Chứa bất kỳ
+            </label> <input type="radio" name="op2" value="0" />
+        </span>
+        <span class="adjust">
+            <label class="font-weight-bold">
+                Không chứa
+            </label> <input type="radio" name="op2" value="2" />
+        </span>
+        <span type='button' class='btn-danger remove-element'> Bỏ chọn</span>
+        <div class="div_thuoc_tinh">@Html.Raw(ViewBag.thuoc_tinh_checkbox2)</div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="totalRecs text-right"></div>
+        <table id="table_data" class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th style="width: 30%">
+                        - ID JOB<br /> - Chức danh<br>
+                        - Công ty <br>
+                        - Địa chỉ
+                    </th>
+
+                    <th>
+                        Lương chính (VND)
+                    </th>
+
+                    <th>
+                        Liên hệ
+                    </th>
+
+                    <th>Nhận nhận HĐ / Ngày tạo JOB</th>
+                    <th style="width: 175px"></th>
+                </tr>
+            </thead>
+            <tbody class="table-hover" id="all_job">
+            </tbody>
+        </table>
+        <div id="tutorial"></div>
+    </div>
+</div>
+
+<div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+    <div class="d-flex text-center data-container">
+        <div class="paging">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog" style="max-width:1000px;">
+        <div class="modal-content">
+
+            <div class="modal-body" id="thuoc_tinh_du_lieu1">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Danh sách nhân viên</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="div-input form-group">
+                            <input placeholder="Tìm kiếm" name="term1" id="term1" class="form-control" />
+                            <button id="btn_search" class="btn btn-primary" onclick="tim()">Tìm</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width:40px"><input type="checkbox" title="Chọn tất cả" id="check_all_nv" onclick="onCheckAllNhanVien()" /></th>
+                                    <th>
+                                        User Name
+                                    </th>
+                                    <th>
+                                        Tên đầy đủ
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        Team
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="div_data1">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-primary" onclick="onAssignJobs_NhanVien()">Gán</button>
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Đánh dấu thuộc tính</h4>
+            </div>
+            <div class="modal-body" id="thuoc_tinh_du_lieu">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn-size btn btn-info" data-submit="submit" onclick="onCreateThuocTinh('@QLCUNL.Models.LoaiThuocTinh.JOB')">Lưu lại</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalTrangThai" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Đổi trạng thái của JOB được giao</h4>
+            </div>
+            <div class="modal-body" id="trang_thai_user_job">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn-size btn btn-info" data-submit="submit" onclick="onCreateTrangThai('@QLCUNL.Models.LoaiThuocTinh.USER_JOB')">Lưu lại</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="preview-job" role="dialog">
+    <div class="modal-dialog" style="max-width: 1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Link Job Tải Lên</h4>
+            </div>
+
+            <div class="modal-body" id="link_job_upload">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="preview-cong-ty" role="dialog">
+    <div class="modal-dialog" style="max-width: 1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Công ty</h4>
+            </div>
+
+            <div class="modal-body" id="detail_cong_ty">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script asp-append-version="true" src="~/js/job.js"></script>
+<script asp-append-version="true" src="~/js/job_gan_nhanvien.js"></script>
+<script>
+    let page = @ViewBag.page;
+    let id_cong_ty = "@ViewBag.id_cong_ty";
+    let tt_chung = "@ViewBag.thuoc_tinh";
+    let ttrieng = "@ViewBag.thuoc_tinh_rieng";
+
+    $(function () {
+        if (tt_chung.length > 0) {
+            let tmp = tt_chung.split(',');
+            tmp.forEach(item => {
+                $(`[name^='thuoc_tinh'][data-type='0'][value='${item}']`,"#div_thuoc_tinh").prop('checked', true);
+            });
+        }
+        if (ttrieng.length > 0) {
+            let tmp = ttrieng.split(',');
+            tmp.forEach(item => {
+                $(`[name^='thuoc_tinh'][data-type='1'][value='${item}']`, "#div_thuoc_tinh").prop('checked', true);
+            });
+        }
+
+        $(`[name='term']`).keypress(function(event) {
+            if (event.keyCode == 13) {
+                id_cong_ty = ""; tt_chung = ""; ttrieng = "";
+                search(page);
+            }
+        });
+        $("#btn_search").click(function () {
+            id_cong_ty = ""; tt_chung = ""; ttrieng = "";
+            search(page);
+        });
+        if (id_cong_ty.length > 0)
+        {
+            $("#cong_ty").val(id_cong_ty);
+        }
+
+        search(page);
+    });
+</script>

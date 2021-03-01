@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutNhaTuyenDung.cshtml";
+    ViewData["Title"] = "Chi tiết ứng viên";
+}
+
+<div class="container all-info-ung-vien">
+    <div class="name-candidate">
+        <h3 class="text-primary">
+        </h3>
+        <hr />
+    </div>
+    <div class="row">
+        <h5><u>Thông tin cơ bản: </u></h5>
+        <div class="col-md-12">
+            <h5 class="ung-vien"></h5>
+            <h5 class="dia-chi"></h5>
+            <h5 class="vi-tri-ung-tuyen"></h5>
+        </div>
+        <hr />
+        <h5><u>Tóm tắt ứng viên: </u></h5>
+        <div class="col-md-12">
+            <h5 class="noi-dung">
+            </h5>
+        </div>
+        <h5><u>CV ứng viên: </u></h5>
+        <div class="col-md-12">
+            <div id="iframe_cv"></div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let id_ung_vien = "@ViewBag.id_ung_vien";
+    $(function () {
+
+        bindDetail(id_ung_vien);
+    })
+</script>
+<script src="~/js/nha_tuyen_dung_ung_vien.js"></script>

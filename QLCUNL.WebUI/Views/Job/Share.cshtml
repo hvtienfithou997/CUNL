@@ -1,0 +1,82 @@
+﻿@model QLCUNL.Models.Job
+
+@{
+    ViewData["Title"] = "Chia sẻ thông tin JOB";
+}
+<h3>Chia sẻ thông tin JOB</h3>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+            <div class="form-group" style="display:none;">
+                <label asp-for="id_job" class="control-label">Id</label>
+                <input asp-for="id_job" readonly class="form-control" id="id_job" />
+                <span asp-validation-for="id_job" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <label asp-for="chuc_danh" class="control-label">Chức danh</label>
+                        <input asp-for="chuc_danh" readonly class="form-control disabled" id="chuc_danh" />
+                        <span asp-validation-for="chuc_danh" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-2">
+                        <label asp-for="so_luong" class="control-label">Số lượng</label>
+                        <input asp-for="so_luong" readonly class="form-control" id="so_luong" />
+                        <span asp-validation-for="so_luong" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group box_tinh_thanh">
+                <label class="control-label">Tỉnh thành</label>
+                <input asp-for="tinh_thanh" readonly class="form-control disabled" id="tinh_thanh" />
+                <span asp-validation-for="tinh_thanh" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label asp-for="luong_chinh_thuc" class="control-label">Lương chính thức</label>
+                        <input asp-for="luong_chinh_thuc" readonly class="form-control" id="luong_chinh_thuc" />
+                        <span asp-validation-for="luong_chinh_thuc" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label asp-for="luong_chinh_thuc_text" class="control-label">Lương chính thức(viết bằng chữ)</label>
+                        <input asp-for="luong_chinh_thuc_text" readonly class="form-control" id="luong_chinh_thuc_text" />
+                        <span asp-validation-for="luong_chinh_thuc_text" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="control-label">Công ty</label>
+                        <input readonly class="form-control" id="cong_ty" />                        
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label">Địa chỉ</label>
+                        <input readonly class="form-control" id="dia_chi_cong_ty" />                        
+                    </div>
+                </div>
+            </div>
+
+            <partial name="_ChiaSeNoiDung">
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    let id = "@ViewBag.id";
+</script>
+<script asp-append-version="true" src="~/js/job_edit.js"></script>
+

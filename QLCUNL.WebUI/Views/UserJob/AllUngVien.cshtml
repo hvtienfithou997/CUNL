@@ -1,0 +1,137 @@
+﻿@model IEnumerable<QLCUNL.Models.UngVien>
+
+@{
+    ViewData["Title"] = "Danh sách ứng viên";
+}
+
+
+
+<div class="row box-search">
+    <div class="col-md-3">
+        <h4>Gán ứng viên vào JOB</h4>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group search-default">
+            <input placeholder="Tìm kiếm" id="term" name="term" class="form-control" />
+            <button id="btn_search" onclick="search()" class="btn-size btn btn-primary">Tìm</button>
+        </div>
+
+        <div class="form-group search-form">
+            <input placeholder="Nhập ID ứng viên" id="id_ung_vien" name="id_ung_vien" class="d-none form-control" />
+            <input placeholder="Ngày đi làm(từ)" id="ngay_di_lam_from" name="ngay_di_lam_from" class="d-none form-control" />
+            <input placeholder="Ngày đi làm(đến)" id="ngay_di_lam_to" name="ngay_di_lam_to" class="d-none form-control" />
+            <input placeholder="Lương mong muốn(từ)" id="luong_mong_muon_from" name="luong_mong_muon_from" class="d-none form-control" />
+            <input placeholder="Lương mong muốn(đến)" id="luong_mong_muon_to" name="luong_mong_muon_to" class="d-none form-control" />
+            <input placeholder="Ngày tạo(từ)" id="ngay_tao_from" name="ngay_tao_from" class="d-none form-control" />
+            <input placeholder="Ngày tạo(đến)" id="ngay_tao_to" name="ngay_tao_to" class="d-none form-control" />
+        </div>
+    </div>
+    <div class="cod-md-4">
+        <select id="type-search" class="form-control" onchange="searchBy()">
+            <option value="default" selected>Mặc định</option>
+            <option value="byid">Tìm theo ID</option>
+            <option value="bydaywork">Ngày đi làm</option>
+            <option value="bysalary">Lương mong muốn</option>
+            <option value="bydaycreate">Ngày tạo </option>
+        </select>
+    </div>
+</div>
+<fieldset>
+<div class="row">
+    
+    <div class="col-md-7">
+        <fieldset>
+        <legend>Thông tin JOB</legend>
+        <div class="info-job-left">
+            
+        </div>
+        </fieldset>
+    </div>
+    <div class="col-md-5">
+        <fieldset>
+        <legend>Thông tin Công ty</legend>
+        <div class="info-job-right">
+        </div>
+        </fieldset>
+    </div>
+    
+</div>
+</fieldset>
+<div class="row">
+    <div class="col-md-12">
+        <div id="div_thuoc_tinh" class="collapse">@Html.Raw(ViewBag.thuoc_tinh_checkbox)</div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-primary disabled" id="btn_grant_all" onclick="onAssign('@ViewBag.id_user_job','@ViewBag.id_job')">Gán các ứng viên đã chọn</button>
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th style="width:40px"><input type="checkbox" id="check_all" onclick="onCheckAll()" /></th>
+                    <th>
+                        Tên ứng viên<br />Liên hệ
+                    </th>
+                    <th>
+                        Trạng thái
+                    </th>
+                    <th>
+                        Địa chỉ
+                    </th>
+                    <th>
+                        Vị trí ứng tuyển
+                    </th>
+                    <th>
+                        Ghi chú cuối
+                    </th>
+
+                    <th style="width:110px"></th>
+                </tr>
+            </thead>
+            <tbody id="div_data">
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+        <div class="d-flex text-center data-container">
+            <div class="paging">
+            </div>
+        </div>
+    </div>
+    <div class="modal modal_position fade" id="modal_detail" role="dialog">
+        <div class="modal-dialog" style="max-width:800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Chi tiết ứng viên</h4>
+                    <button type="button" class="btn-size btn btn-dark" data-dismiss="modal">Đóng</button>
+                </div>
+                <div class="modal-body" id="ungvien">
+                    <ul id="ungvien_detail" class="list-group">
+                    </ul>
+                </div>
+                <div class="modal-body" id="note_ung_vien">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script asp-append-version="true" type="text/javascript" src="~/js/user_job_gan_ungvien.js"></script>
+<script>
+    var id_user_job = "@ViewBag.id_user_job";
+    var id_job = "@ViewBag.id_job";
+    $(function() {
+        $(`[name='term']`).keypress(function(event) {
+            if (event.keyCode == 13) {
+                search(1);
+            }
+        });
+        $("#btn_search").click(function() {
+            search(1);
+        });
+        search(1);
+        detailJob(id_job);
+    });
+</script>

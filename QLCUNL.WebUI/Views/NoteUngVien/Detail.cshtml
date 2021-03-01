@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Detail";
+}
+
+
+
+<h4>Thông tin note ứng viên</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+       
+            <ul id="noteungvien_detail">
+            </ul>
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+<script>
+    let id = "@ViewBag.id";
+    $(function () {
+       
+        bindDetail(id);
+
+    });
+</script>
+<script asp-append-version="true" src="~/js/note_ung_vien.js"></script>

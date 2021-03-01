@@ -1,0 +1,43 @@
+﻿@model QLCUNL.Models.TinhThanh
+
+@{
+    ViewData["Title"] = "Chỉnh sửa";
+}
+<h3>Tỉnh thành</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+            <div class="form-group" style="display:none;">
+                <label asp-for="id_tinh" class="control-label">Id</label>
+                <input asp-for="id_tinh" class="form-control" id="id_tinh" />
+                <span asp-validation-for="id_tinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ten_tinh" class="control-label">Tên tỉnh</label>
+                <input asp-for="ten_tinh" class="form-control" id="ten_tinh" />
+                <span asp-validation-for="ten_tinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ten_viet_tat" class="control-label">Tên viết tắt</label>
+                <input asp-for="ten_viet_tat" class="form-control" id="ten_viet_tat" />
+                <span asp-validation-for="ten_viet_tat" class="text-danger"></span>
+            </div>       
+
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="onUpdate()"><i class="icon icon-update"></i>Cập nhật</button>
+            </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+<script asp-append-version="true" src="~/js/tinh_thanh_edit.js"></script>

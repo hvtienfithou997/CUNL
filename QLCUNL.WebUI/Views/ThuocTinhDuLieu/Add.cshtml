@@ -1,0 +1,45 @@
+﻿@using QLCUNL.Models
+@model QLCUNL.Models.ThuocTinhDuLieu
+
+@{
+    ViewData["Title"] = "Thêm thuộc tính dữ liệu";
+}
+
+<h1>Add</h1>
+
+<h3>Thêm thuộc tính dữ liệu</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">Đối tượng</label>
+                @*@Html.DropDownList("LoaiObj", new SelectList(Enum.GetValues(typeof(LoaiThuocTinh))), new { @class = "form-control", @id = "loai_obj" })*@
+                <select class="form-control" asp-for="loai_obj" asp-items="Html.GetEnumSelectList<LoaiThuocTinh>()">
+                    <option selected="selected" value="-1">---Thuộc tính---</option>
+                </select>
+                <span asp-validation-for="loai_obj" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_obj" class="control-label">ID đối tượng</label>
+                <input asp-for="id_obj" class="form-control" id="id_obj" />
+                <span asp-validation-for="id_obj" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Thuộc tính</label>
+                <div id="div_thuoc_tinh"></div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="onSubmit()"><i class="icon icon-add"></i>Thêm</button>
+            </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="All">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script asp-append-version="true" src="~/js/thuoc_tinh_du_lieu.js"></script>

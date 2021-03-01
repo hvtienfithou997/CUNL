@@ -1,0 +1,67 @@
+﻿@using QLCUNL.Models
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QLCUNL.WebUI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/w3/w3.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/search_form.css" rel="stylesheet" />
+    <link href="~/css/cong_ty.css" rel="stylesheet" />
+    <link href="~/css/ung_vien.css" rel="stylesheet" />
+    <link href="~/css/job.css" rel="stylesheet" />
+    <script asp-append-version="true" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script asp-append-version="true" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script asp-append-version="true" src="~/js/notify.min.js"></script>
+    <script asp-append-version="true" src="~/js/site.js"></script>
+    <script asp-append-version="true" src="~/lib/jquery/dist/jquery.validate.min.js"></script>
+    <script asp-append-version="true" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script asp-append-version="true" src="~/lib/clipboard/clipboard.js"></script>
+    <script asp-append-version="true" src="~/lib/jquery/dist/autosize.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <script asp-append-version="true" src="~/lib/autocomplete/bootstrap-autocomplete.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+    @*<link rel="stylesheet" type="text/css" href="~/lib/datatables/jquery.dataTables.min.css" />*@
+
+    <script asp-append-version="true" type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript">
+        var user = ""; var API_TOKEN = "";
+    @if (User.Identity.IsAuthenticated)
+    {
+        <text>user = "@User.Identity.Name"; API_TOKEN = "@ViewBag.token"; </text>;
+
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" style="white-space: nowrap" asp-area="" asp-controller="Home" asp-action="Index">Cung ứng nhân lực</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            VietHunter &copy; 2020 - Quản lý cung ứng nhân lực
+        </div>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

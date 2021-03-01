@@ -1,0 +1,76 @@
+﻿@model IEnumerable<QLCUNL.Models.NhaTuyenDung>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Danh sách nhà tuyển dụng";
+}
+
+    <div class="row">
+        <div class="col-sm-6"><h3>Danh sách nhà tuyển dụng</h3></div>
+        <div class="col-sm-6 text-right"><a class="btn-size btn btn-primary" asp-action="Add" style="color: #fff">Tạo mới</a></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="div-input form-group">
+                <input placeholder="Email của nhà tuyển dụng..." name="term" class="form-control" />
+                <button id="btn_search" class="btn-size btn btn-primary">Tìm</button>
+            </div>
+        </div>       
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" name="da-xem" class="custom-control-input" value="-1" id="da-xem">
+                <label class="custom-control-label" for="da-xem">Lọc theo nhà tuyển dụng đã xem </label>
+            </div>
+        </div>
+
+    </div>
+<div class="row">
+    <div class="col-sm-12 table-responsive">
+        <div class="totalRecs text-right"></div>
+        <table id="table_data" class="display table  table-striped" style="width:100%">
+            <thead class="thead-light">
+                <tr>
+                    <th>
+                        Email nhà tuyển dụng
+                    </th>
+                    <th>
+                        JOB
+                    </th>
+                    
+                    <th>
+                        Nội dung
+                    </th>
+                    
+                    <th class="action"></th>
+                </tr>
+            </thead>
+            <tbody class="table-hover" id="div_data">
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+        <div class="d-flex text-center data-container">
+            <div class="paging">
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+<script asp-append-version="true" type="text/javascript" src="~/js/nha_tuyen_dung.js"></script>
+<script>   
+    $(function () {
+        $(`[name='term']`).keypress(function (event) {
+            if (event.keyCode == 13) {
+                Search(1);
+            }
+        });
+        $("#btn_search").click(function () {
+            Search(1);
+        });
+        Search(1);
+    })
+</script>

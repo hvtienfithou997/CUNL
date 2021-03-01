@@ -1,0 +1,57 @@
+﻿@model QLCUNL.Models.GroupUser
+@{
+    ViewData["Title"] = "All";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Danh sách nhóm người dùng</h3>
+    </div>
+    <div class="col-md-6 text-right">
+        <a asp-action="Add" class="btn-size btn btn-primary" style="color: #fff">Tạo mới</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="div-input form-group">
+            <input placeholder="Tìm kiếm" id="term" name="term" class="form-control" />
+            <button id="btn_search" class="btn-size btn btn-primary">Tìm</button>
+        </div>
+    </div>
+</div>
+<hr />
+<p class="text-right total-recs">Tổng số bản ghi</p>
+<table class="table table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">
+                Tên nhóm
+            </th>
+            <th scope="col">
+                Ngày tạo
+            </th>
+            <th scope="col">
+                Người tạo
+            </th>
+            <th></th>
+            @*<th style="width: 155px"></th>*@
+        </tr>
+    </thead>
+    <tbody class="table-hover" id="div_data">
+    </tbody>
+</table>
+<script>
+    $(function () {
+
+        $(`[name='term']`).keypress(function (event) {
+            if (event.keyCode == 13) {
+                search();
+            }
+        });
+        $("#btn_search").click(function () {
+            search();
+        });
+        search("");
+    })
+</script>
+<script asp-append-version="true" src="~/js/group_user.js"></script>

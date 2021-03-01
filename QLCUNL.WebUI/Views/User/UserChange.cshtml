@@ -1,0 +1,68 @@
+﻿@using QLCUNL.Models
+@model QLCUNL.Models.User
+@{
+    ViewData["Title"] = "Chỉnh sửa";
+}
+
+<ul class="nav nav-tabs row" id="myTab" role="tablist">
+    <li class="nav-item col-md-6">
+        <a class="tab-change nav-link active" id="changepass-tab" data-toggle="tab" href="#changepass" role="tab" aria-controls="profile" aria-selected="false">Đổi mật khẩu</a>
+    </li>
+    <li class="nav-item col-md-6">
+        <a class="nav-link tab-edit " id="edit-tab" data-toggle="tab" href="#edit-user" role="tab" aria-controls="home" aria-selected="true">Sửa thông tin</a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="changepass" role="tabpanel" aria-labelledby="changepass-tab">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Nhập mật khẩu cũ</label>
+                    <input class="form-control" type="password" id="old-password" name="old-password" value="" required />
+                    <input class="d-none form-control" id="password" />
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu mới</label>
+                    <input class="form-control" type="password" id="new-password" name="new-password" value="" required />
+                </div>
+                <div class="form-group">
+                    <label>Nhập lại mật khẩu mới</label>
+                    <input class="form-control" type="password" id="re-new-password" name="re-new-password" value="" required />
+                    <p class="text-danger valid-value"></p>
+                </div>
+                <div class="form-group" style="width: 30%">
+                    <input type="button" onclick="onChangePass()" class="btn-size btn btn-primary" id="btn-change-pass" name="btn-change-pass" value="Đổi mật khẩu" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="edit-user" role="tabpanel" aria-labelledby="edit-tab">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group" style="display:none;">
+                    <label class="control-label">Id</label>
+                    <input readonly class="form-control" id="id_user" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Tên người dùng</label>
+                    <input readonly class="form-control" id="user_name" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <labe for="full_name" class="control-label">Tên của bạn</labe>
+                    <input class="form-control" id="full_name" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="button" value="Cập nhật" class="btn-size btn btn-primary" onclick="editForUser()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let id = "@ViewBag.id";
+</script>
+<script asp-append-version="true" src="~/js/user_edit.js"></script>

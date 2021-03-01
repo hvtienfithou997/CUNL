@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "Chi tiết thuộc tính";
+}
+
+<h1>Chi tiết thuộc tính</h1>
+<hr />
+    <p><a target="_blank" class="btn-size btn-warning text-light" href="/thuoctinh/edit?id=@ViewBag.id">Sửa</a></p>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <ul id="thuoc_tinh_detail">
+                
+                
+            </ul>
+        
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+<script>
+    let shared = "@ViewBag.Shared";
+    let private = "@ViewBag.Private";
+    let id = "@ViewBag.id";
+    $(function () {
+        bindDetail(id);
+    })
+</script>
+<script asp-append-version="true" src="~/js/thuoc_tinh.js"></script>

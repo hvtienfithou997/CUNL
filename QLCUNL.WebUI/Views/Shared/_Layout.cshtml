@@ -1,0 +1,104 @@
+﻿@using QLCUNL.Models
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @*<meta content="connect-src 'self' http://123.30.238.32:12019" http-equiv="Content-Security-Policy">*@
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QLCUNL.WebUI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/w3/w3.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/search_form.css" rel="stylesheet" />
+    <link href="~/css/cong_ty.css" rel="stylesheet" />
+    <link href="~/css/ung_vien.css" rel="stylesheet" />
+    <link href="~/css/job.css" rel="stylesheet" />
+    <script asp-append-version="true" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script asp-append-version="true" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script asp-append-version="true" src="~/js/notify.min.js"></script>
+    <script asp-append-version="true" src="~/js/site.js"></script>
+    <script asp-append-version="true" src="~/lib/jquery/dist/jquery.validate.min.js"></script>
+    <script asp-append-version="true" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script asp-append-version="true" src="~/lib/ckeditor/ckeditor.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <script asp-append-version="true" src="~/lib/autocomplete/bootstrap-autocomplete.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" />
+    @*<link rel="stylesheet" type="text/css" href="~/lib/datatables/jquery.dataTables.min.css" />*@
+
+    <script asp-append-version="true" type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
+    <script type="text/javascript">
+        var user = ""; var API_TOKEN = "";
+    @if (User.Identity.IsAuthenticated)
+    {
+        <text>user = "@User.Identity.Name"; API_TOKEN = "@ViewBag.token"; </text>;
+
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" style="white-space: nowrap" asp-area="" asp-controller="Home" asp-action="Index">CUNL</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1 list-menu" id="all_menu_root">
+                        @if (ViewBag.menu != null)
+                        {
+                            if (User.IsInRole(Role.APP_ADMIN.ToString()) || User.IsInRole(Role.SYS_ADMIN.ToString()))
+                            {
+                                
+                                <li class="nav-item"><a class="nav-link text-dark" href="/job/all">JOBS</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/ungvien/all">Kho ứng viên</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/congty/all">Công ty</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/nhatuyendung/all">Nhà tuyển dụng</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/NoteUngVienJob/all">Ứng viên theo JOB</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/user/all">Người dùng</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/groupuser/all">Team</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/thuoctinh/all">Thuộc tính</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/baocao/all">Báo cáo</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/menu/all">Menu</a></li>
+                            }
+                            else
+                            {
+                                foreach (var item in (List<QLCUNL.Models.Menu>)ViewBag.menu)
+                                {
+                                    <li class="nav-item"><a class="nav-link text-dark" href="@item.url">@item.ten_menu</a></li>
+                                }
+                            }
+
+                        }
+                        <li class="nav-item dropdown logout">
+                            <div class="w3-dropdown-hover">
+                                <button class="w3-button w3-light">@(User.Identity.IsAuthenticated ? Html.Raw($"Chào: {User.Identity.Name}").ToString() : "")<i class="fa fa-caret-down"></i> </button>
+                                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                    <a class="nav-link text-dark w3-bar-item w3-button" href="/user/userchange?id=@(User.Identity.Name)">Đổi thông tin</a>
+
+                                    <a class="nav-link text-dark w3-bar-item w3-button" href="/user/logout">Thoát</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            VietHunter &copy; 2020 - Quản lý cung ứng nhân lực
+        </div>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

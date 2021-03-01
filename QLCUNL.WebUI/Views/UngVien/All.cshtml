@@ -1,0 +1,239 @@
+﻿@model IEnumerable<QLCUNL.Models.UngVien>
+
+@{
+    ViewData["Title"] = "Danh sách ứng viên";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Danh sách ứng viên</h3>
+    </div>
+    <div class="col-md-6 text-right"><a asp-action="Add" class="btn-size btn btn-primary" style="color: #fff">Tạo mới</a></div>
+</div>
+<div class="row">
+    <div class="col-md-5"><label> Tìm kiếm theo: </label></div>
+    <div class="col-md-2"><label> Sắp xếp theo:  </label></div>
+    <div class="col-md-1"><label>Thứ tự:  </label></div>
+    <div class="col-md-2"><label>Tùy chọn tìm kiếm: </label></div>
+</div>
+<div class="row box-search">
+
+    <div class="col-md-5">
+        <div class="form-group search-default">
+            <input placeholder="Tìm kiếm" id="term" name="term" class="form-control" value="@Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.term))" />
+            <button id="btn_search" class="btn-size btn btn-primary">Tìm</button>
+        </div>
+    </div>
+    <div class="col-md-2">
+
+        <div class="form-group">
+            <select id="field_sort" class="form-control">
+                <option value="ngay_tao" selected>Ngày tạo</option>
+                <option value="ngay_sua">Ngày sửa</option>
+                <option value="ho_ten_ung_vien.keyword">Họ tên</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md=1">
+        <div class="form-group">
+            <select id="sort" class="form-control">
+                <option value="0" selected>Giảm</option>
+                <option value="1">Tăng</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <select id="type-search" class="form-control" onchange="searchBy()">
+            <option value="default" selected>Mặc định</option>
+            <option value="bydaywork">Ngày đi làm</option>
+            <option value="bysalary">Lương mong muốn</option>
+            <option value="bydaycreate">Ngày tạo </option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        @if ((bool)ViewBag.tim_ung_vien_team_khac)
+        {
+            <input type="checkbox" id="tim_ung_vien_team_khac" /> <label class="control-label">Tìm ứng viên mọi Team</label>
+        }
+        <div class="form-group search-form">
+            <input placeholder="Ngày đi làm(từ)" id="ngay_di_lam_from" name="ngay_di_lam_from" class="d-none form-control" value="" />
+            <input placeholder="Ngày đi làm(đến)" id="ngay_di_lam_to" name="ngay_di_lam_to" class="d-none form-control" value="" />
+            <input placeholder="Lương mong muốn(từ)" id="luong_mong_muon_from" name="luong_mong_muon_from" class="d-none form-control" value="" />
+            <input placeholder="Lương mong muốn(đến)" id="luong_mong_muon_to" name="luong_mong_muon_to" class="d-none form-control" value="" />
+            <input placeholder="Ngày tạo(từ)" id="ngay_tao_from" name="ngay_tao_from" class="d-none form-control" value="" />
+            <input placeholder="Ngày tạo(đến)" id="ngay_tao_to" name="ngay_tao_to" class="d-none form-control" value="" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div id="div_thuoc_tinh" class="collapse">@Html.Raw(ViewBag.thuoc_tinh_checkbox)</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 table-responsive">
+        <div class="totalRecs text-right"></div>
+        <table id="table_data" class="display table  table-striped" style="width:100%">
+            <thead class="thead-light">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        Tên
+                    </th>
+
+                    <th>
+                        Địa chỉ
+                    </th>
+                    <th>
+                        V/trí ứ/tuyển
+                    </th>
+                    <th>
+                        Lương mong muốn
+                    </th>
+                    <th>
+                        Ngày tạo
+                    </th>
+                    <th>
+                        Thuộc tính
+                    </th>
+
+                    <th class="action"></th>
+                    
+                </tr>
+            </thead>
+        </table>
+        <div id="tutorial"></div>
+    </div>
+    <div style="text-align: center; width: 100%; display: inline-flex; justify-content: center">
+        <div class="d-flex text-center data-container">
+            <div class="paging">
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Đánh dấu thuộc tính</h4>
+                    <h5 class="add_thuoc_tinh"></h5>
+                </div>
+                <div class="modal-body" id="thuoc_tinh_du_lieu">
+                </div>
+                <hr />
+                <div class="modal-body" id="ghi_chu_ung_vien">
+                    <div class="form-group d-none">
+                        <label for="recipient-name" class="col-form-label" readonly>ID ứng viên:</label>
+                        <input type="text" class="form-control" id="id_ung_vien_note">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Ghi chú:</label>
+                        <textarea class="form-control" id="ghi_chu"></textarea>
+                    </div>
+                    <hr />
+                </div>
+                <div class="modal-body" id="thuoc_tinh_ghi_chu">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn-size btn btn-info" data-submit="submit" onclick="onCreateThuocTinh('@QLCUNL.Models.LoaiThuocTinh.UNG_VIEN')">Lưu lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="auto_id_job" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">JOB Auto ID</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control d-none" id="id-candidate" value="" />
+                <input class="form-control" name="auto_id" id="auto_id" value="" />
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-info" onclick="saveAssignCandidateToJob(event)">Lưu</button>
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="preview-cv" role="dialog">
+    <div class="modal-dialog" style="max-width: 1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">CV Ứng Viên</h4>
+            </div>
+
+            <div class="modal-body" id="cv_ung_vien">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-size btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script asp-append-version="true" type="text/javascript" src="~/js/ung_vien_all.js"></script>
+<script>
+
+    let ngay_dl_from = "@ViewBag.ngay_di_lam_from";
+    let ngay_dl_to = "@ViewBag.ngay_di_lam_to";
+    let ngay_t_from = "@ViewBag.ngay_tao_from";
+    let ngay_t_to = "@ViewBag.ngay_tao_to";
+    let luong_mm_from = "@ViewBag.luong_mong_muon_from";
+    let luong_mm_to = "@ViewBag.luong_mong_muon_to";
+    let tt_chung = "@ViewBag.thuoc_tinh";
+    let ttrieng = "@ViewBag.thuoc_tinh_rieng";
+    $(function () {
+        if (ngay_dl_from !== "0") {
+            let ndlf = convert(toDate(epochToTime(parseInt(ngay_dl_from))));
+            $("#ngay_di_lam_from").val(ndlf);
+        }
+
+        if (ngay_dl_to !== "0") {
+            let ndlt = convert(toDate(epochToTime(parseInt(ngay_dl_to))));
+            $("#ngay_di_lam_to").val(ndlt);        
+        }
+        if (ngay_t_from !== "0") {            
+            let ngaytf = convert(toDate(epochToTime(parseInt(ngay_t_from))));
+            $("#ngay_tao_from").val(ngaytf);
+        }
+        if (ngay_t_to !== "0") {            
+            let ngaytt = convert(toDate(epochToTime(parseInt(ngay_t_to))));
+            $("#ngay_tao_to").val(ngaytt);
+        }
+        $("#luong_mong_muon_from").val(luong_mm_from);
+        $("#luong_mong_muon_to").val(luong_mm_to);
+
+        if (tt_chung.length > 0) {
+            let tmp = tt_chung.split(',');
+            tmp.forEach(item => {
+                $(`[name^='thuoc_tinh'][data-type='0'][value='${item}']`).prop('checked', true);
+            });
+        }
+        if (ttrieng.length > 0) {
+            let tmp = ttrieng.split(',');
+            tmp.forEach(item => {
+                $(`[name^='thuoc_tinh'][data-type='1'][value='${item}']`).prop('checked', true);
+            });
+        }
+        $(`[name='term']`).keypress(function(event) {
+            if (event.keyCode == 13) {
+                search(1);
+            }
+        });
+
+        if ($('#ngay_di_lam_from').val() != "" || $('#ngay_di_lam_to').val() != "") {
+            $('#type-search').val('bydaywork');
+            $('#ngay_di_lam_from').removeClass("d-none");
+            $('#ngay_di_lam_to').removeClass("d-none");
+        }
+        search(1);
+    });
+</script>

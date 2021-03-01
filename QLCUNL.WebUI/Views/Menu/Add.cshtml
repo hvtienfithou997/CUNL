@@ -1,0 +1,41 @@
+﻿@model QLCUNL.Models.Menu
+
+@{
+    ViewData["Title"] = "Thêm mới menu";
+}
+<h3>Thêm mới menu</h3>
+<hr />
+<form id="validate-menu">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="ten_menu" class="control-label">Tên menu</label>
+                <input asp-for="ten_menu" class="form-control" id="ten_menu" name="ten_menu" />
+                <span asp-validation-for="ten_menu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="url" class="control-label">Url</label>
+                <input asp-for="url" class="form-control" id="url" />
+                <span asp-validation-for="url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="order" class="control-label">Thứ tự xuất hiện</label>
+                <input asp-for="order" class="form-control" id="order" />
+                <span asp-validation-for="order" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="onSubmit(event)"><i class="icon icon-add"></i>Thêm</button>
+            </div>
+        </div>
+
+    </div>
+</form>
+<div>
+    <a asp-action="All">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script asp-append-version="true" src="~/js/menu.js"></script>

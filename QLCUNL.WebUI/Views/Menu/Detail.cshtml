@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "Chi tiết menu";
+}
+
+<h3>Chi tiết menu</h3>
+<hr />
+<p><a target="_blank" class="btn-size btn-warning text-light" href="/menu/edit?id=@ViewBag.id">Sửa menu</a></p>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+       
+            <ul id="menu_detail" class="list-group list-group-flush">
+                
+                
+            </ul>
+        
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+<script asp-append-version="true" src="~/js/menu.js"></script>
+<script>
+    let id = "@ViewBag.id";
+    $(function () {
+        if (typeof id !== 'undefined')
+            bindDetail(id);
+    })
+</script>

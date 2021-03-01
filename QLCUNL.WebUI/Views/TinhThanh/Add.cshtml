@@ -1,0 +1,39 @@
+﻿@model QLCUNL.Models.TinhThanh
+
+@{
+    ViewData["Title"] = "Thêm tỉnh thành";
+}
+<h3>Tỉnh thành</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+           
+            <div class="form-group">
+                <label asp-for="ten_tinh" class="control-label">Tên tỉnh</label>
+                <input asp-for="ten_tinh" class="form-control" id="ten_tinh"/>
+                <span asp-validation-for="ten_tinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ten_viet_tat" class="control-label">Tên viết tắt</label>
+                <input asp-for="ten_viet_tat" class="form-control" id="ten_viet_tat" />
+                <span asp-validation-for="ten_viet_tat" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="onSubmit()"><i class="icon icon-add"></i>Thêm</button>
+            </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+<script asp-append-version="true" src="~/js/tinh_thanh.js"></script>

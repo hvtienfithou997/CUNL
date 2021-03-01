@@ -1,0 +1,12 @@
+F:\COde\QLCUNL.Models\bin\Release\netstandard2.0\QLCUNL.Models.deps.json
+F:\COde\QLCUNL.Models\bin\Release\netstandard2.0\QLCUNL.Models.dll
+F:\COde\QLCUNL.Models\bin\Release\netstandard2.0\QLCUNL.Models.pdb
+F:\COde\QLCUNL.Models\bin\Release\netstandard2.0\XUtil.dll
+F:\COde\QLCUNL.Models\bin\Release\netstandard2.0\XUtil.pdb
+F:\COde\QLCUNL.Models\obj\Release\netstandard2.0\QLCUNL.Models.csprojAssemblyReference.cache
+F:\COde\QLCUNL.Models\obj\Release\netstandard2.0\QLCUNL.Models.csproj.CoreCompileInputs.cache
+F:\COde\QLCUNL.Models\obj\Release\netstandard2.0\QLCUNL.Models.AssemblyInfoInputs.cache
+F:\COde\QLCUNL.Models\obj\Release\netstandard2.0\QLCUNL.Models.AssemblyInfo.cs
+F:\COde\QLCUNL.Models\obj\Release\netstandard2.0\QLCUNL.Models.csproj.CopyComplete
+F:\COde\QLCUNL.Models\obj\Release\netstandard2.0\QLCUNL.Models.dll
+F:\COde\QLCUNL.Models\obj\Release\netstandard2.0\QLCUNL.Models.pdb

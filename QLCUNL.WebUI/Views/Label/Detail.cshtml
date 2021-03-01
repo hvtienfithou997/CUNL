@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Detail";
+}
+
+<h1>Chi tiết Label</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <details open>
+            <summary>Thông tin Label bao gồm:</summary>
+            <ul id="label_detail">
+                
+                
+            </ul>
+        </details>
+    </div>
+</div>
+
+<div>
+    <a asp-action="all">Quay lại danh sách</a>
+</div>
+
+<script asp-append-version="true" src="~/js/label.js"></script>

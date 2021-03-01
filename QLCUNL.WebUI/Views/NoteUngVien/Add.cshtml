@@ -1,0 +1,52 @@
+﻿@model QLCUNL.Models.NoteUngVien
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+
+
+<h4>Tạo mới note ứng viên</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="form-group">
+            <label asp-for="id_ung_vien" class="control-label">Tên ứng viên</label>
+            <select asp-for="id_ung_vien" class="form-control" id="id_ung_vien">
+                <option>--Chọn từ danh sách--</option>
+                @if (ViewBag.list_ung_vien != null)
+                {
+                    foreach (var item in ViewBag.list_ung_vien)
+                    {
+                        <option value="@item.id_ung_vien">@item.ho_ten_ung_vien</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="id_ung_vien" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ghi_chu" class="control-label"></label>
+            <textarea id="ghi_chu" class="form-control" placeholder="Ghi chú"></textarea>
+            <span asp-validation-for="ghi_chu" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="thuoc_tinh" class="control-label">Thuộc tính</label>
+            @Html.Raw(ViewBag.thuoc_tinh_checkbox)
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" onclick="onSubmit()"><i class="icon icon-add"></i>Thêm</button>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="All">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script asp-append-version="true" src="~/js/note_ung_vien.js"></script>
